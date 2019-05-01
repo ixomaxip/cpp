@@ -6,11 +6,11 @@ using namespace std;
 
 int main()
 {
-    string x = "abc";
-    string y = "abc";
+    int x = 3;
+    int y = 1;
     // cout << (x + y) * (x - y);
 
-    if (x < y)
+    if ((x - y) * (x + y) > 10)
     {
         cout << "less";
     }
