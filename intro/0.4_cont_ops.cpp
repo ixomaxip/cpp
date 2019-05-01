@@ -14,12 +14,14 @@ int main()
         cout << c << "\n";
     }
 
-    vector<string> nums = {"1","3","5","7","9","2"};
-    for (auto c : nums)
+    vector<int> nums = {1,5,3,5,7,9,2};
+    int q = 0;
+    for (auto c : nums) 
     {
-        cout << c << ", ";
-
+        if (c == 5)
+            q++;
     }
+    cout << "There are " << q << " fives";
 
 
     cout << '\n';
