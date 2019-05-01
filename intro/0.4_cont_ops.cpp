@@ -14,11 +14,11 @@ int main()
         cout << c << "\n";
     }
 
-    vector<int> nums = {1,3,5,7,9,2};
-    for (int c : nums)
+    vector<string> nums = {"1","3","5","7","9","2"};
+    for (auto c : nums)
     {
         cout << c << ", ";
-        
+
     }
 
 
