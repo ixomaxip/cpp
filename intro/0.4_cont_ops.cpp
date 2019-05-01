@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -21,8 +22,11 @@ int main()
         if (c == 5)
             q++;
     }
-    cout << "There are " << q << " fives";
+    cout << "There are " << q << " fives\n";
 
+    q = count(begin(nums), end(nums), 5);
+
+    cout << "There are " << q << " fives (with algorithm)\n";
 
     cout << '\n';
     return 0;
