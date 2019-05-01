@@ -5,6 +5,13 @@
 
 using namespace std;
 
+struct Person
+{
+    string name;
+    string surname;
+    int age;
+};
+
 int main()
 {
     int x = -5;
@@ -22,9 +29,16 @@ int main()
     name_to_val["two"] = 2;
 
     cout << "two is " << name_to_val["two"];
-    
-    
     cout << '\n';
+
+    vector<Person> staff ;
+    staff.push_back({"John", "Smith", 25});
+    staff.push_back({"Franz", "Kafka", 35});
+
+    cout << staff[0].name;
+
+    cout << '\n';
+
 
     return 0;
 }
