@@ -28,6 +28,16 @@ int main()
 
     cout << "There are " << q << " fives (with algorithm)\n";
 
+    sort(begin(nums), end(nums));
+    for (auto x : nums)
+    {
+        cout << x << " ";
+    }
+
+    string w = "babax";
+    sort(begin(w), end(w));
+    cout << w << " " << count(begin(w), end(w), 'a');
+
     cout << '\n';
     return 0;
 }
