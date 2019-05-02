@@ -11,6 +11,7 @@ int main()
     cout << x << endl;
 
     string s = "foo";
+    //full copy
     string t = s;
 
     t += " bar";
