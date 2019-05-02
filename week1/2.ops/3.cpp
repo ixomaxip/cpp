@@ -5,13 +5,20 @@ using namespace std;
 
 int main()
 {
-    string a = "fire";
-    string b = "water";
+    vector<string> a = {"fire", "water"};
+    vector<string> b = {"fog", "air"};
 
-    if (a < b)
+    if (a == b)
     {
-        cout << "a is less than b" << endl;
+        cout << "a is equal b" << endl;
     }
+    else
+    {
+        cout << "a is not equal b" << endl;
+    }
+    
+
+    
 
     return 0;
 }
