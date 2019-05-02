@@ -12,5 +12,9 @@ int main()
     << double (a) / b << endl
     << a / double(b) << endl;
 
+    int x = 5;
+    x = x + 2;
+    cout << x << endl;
+
     return 0;
 }
