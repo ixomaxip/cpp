@@ -25,7 +25,7 @@ int main()
     {
         cout << a << endl;
     }
-    else if (b < a && b < c)
+    else if (b <= a && b <= c)
     {
         cout << b << endl;
     }
