@@ -20,6 +20,9 @@ int main()
         cout << "a is not equal b" << endl;
     }
     
+    string s = "abc";
+    if (!s.empty() && s < "zzz")
+        cout << s << endl;
 
     
 
