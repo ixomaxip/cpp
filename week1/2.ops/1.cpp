@@ -8,8 +8,17 @@ int main()
     int x = 5;
     x =6;
 
-    cout << x;
+    cout << x << endl;
 
-    cout << '\n';
+    string s = "foo";
+    string t = s;
+
+    t += " bar";
+
+    cout << "s = " << s << endl;
+    cout << "t = " << t << endl;
+
+
+    cout << endl;
     return 0;
 }
