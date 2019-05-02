@@ -10,8 +10,8 @@ using namespace std;
  beta alpha gamma
  gamma alpha beta
 
- alpha beta alpha
- alpha alpha beta
+ alpha beta alpha - 1 bug
+ alpha alpha beta - 2 bug
  beta alpha alpha
 
  gamma gamma gamma
@@ -29,7 +29,7 @@ int main()
     {
         cout << b << endl;
     }
-    else if (c < a && c < b)
+    else
     {
         cout << c << endl;
     }
