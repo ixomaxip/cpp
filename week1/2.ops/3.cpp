@@ -1,12 +1,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
+
 using namespace std;
 
 int main()
 {
-    vector<string> a = {"fire", "water"};
-    vector<string> b = {"fog", "air"};
+    map<string, int> a;
+    a["one"] = 1;
+    map<string, int> b;
 
     if (a == b)
     {
