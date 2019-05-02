@@ -19,6 +19,15 @@ int main()
     cout << "s = " << s << endl;
     cout << "t = " << t << endl;
 
+    vector<string> w = {"a", "b", "c"};
+    vector<string> v;
+
+    v = w;
+    v[0] = "d";
+
+    cout << w[0] << " " << w[1] << endl;
+    cout << v[0] << " " << v[1] << endl;
+
 
     cout << endl;
     return 0;
