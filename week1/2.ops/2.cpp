@@ -13,8 +13,8 @@ int main()
     << a / double(b) << endl;
 
     int x = 5;
-    x = x + 2;
-    cout << x << endl;
+    cout << "x = " << x  << "; x++ = " << x++ << endl;
+    cout << "now x = " << x << "; ++x = " << ++x << endl;
 
     return 0;
 }
