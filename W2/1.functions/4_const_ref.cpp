@@ -26,7 +26,7 @@ vector<person> get_population()
     return p;
 }
 
-void print_population_size(vector<person> p)
+void print_population_size(const vector<person>& p)
 {
     cout << "P size is " << p.size() << endl;
 }
@@ -41,7 +41,7 @@ int main()
         << duration_cast<milliseconds>(finish - start).count()
         << "ms" << endl;
     start = steady_clock::now(); 
-    print_population_size(people);
+    print_population_size(get_population());
     finish = steady_clock::now();
     cout << "print_population_size "
         << duration_cast<milliseconds>(finish - start).count()
