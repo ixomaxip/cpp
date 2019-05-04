@@ -5,10 +5,10 @@ using namespace std;
 
 int main()
 {
-    const int x =5;
-    // x = 6;
-    // x +=4;
-
-    cout << x << endl;
+    const string s = "aaaaaaaaaasdf";
+    cout << s.size() << endl;
+    // s += " bbbb";
+    string t = s + "!!!";
+    cout << s << endl;
     return 0;
 }
