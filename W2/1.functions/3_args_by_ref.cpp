@@ -11,16 +11,15 @@ void swap(int& x, int& y)
     y = tmp;
 }
 
-vector<int> mysort(vector<int> v)
+void mysort(vector<int>& v)
 {
     sort(begin(v), end(v));
-    return v;
 }
 
 int main()
 {
     vector<int> ns = {3,6,2,3,5,6,4};
-    ns = mysort(ns);
+    mysort(ns);
     for (auto n : ns)
     {
         cout << n << ' ';
