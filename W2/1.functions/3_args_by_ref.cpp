@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -10,14 +11,21 @@ void swap(int& x, int& y)
     y = tmp;
 }
 
+vector<int> mysort(vector<int> v)
+{
+    sort(begin(v), end(v));
+    return v;
+}
+
 int main()
 {
-    int a = 1;
-    int b = 2;
-    swap(a,b);
-    cout << "a = " << a << endl;
-    cout << "b = " << b << endl;
+    vector<int> ns = {3,6,2,3,5,6,4};
+    ns = mysort(ns);
+    for (auto n : ns)
+    {
+        cout << n << ' ';
+    }
 
-
+    cout << endl;
     return 0;
 }
