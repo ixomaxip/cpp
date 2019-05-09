@@ -1,32 +1,38 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 using namespace std;
 
 /*
 input
-8
-COME 5
-WORRY 1
-WORRY 4
-COME -2
-WORRY_COUNT
-COME 3
-WORRY 3
-WORRY_COUNT
+12
+ADD 5 Salary
+ADD 31 Walk
+ADD 30 WalkPreparations
+NEXT
+DUMP 5
+DUMP 28
+NEXT
+DUMP 31
+DUMP 30
+DUMP 28
+ADD 28 Payment
+DUMP 28
 output
-1
-2
+1 Salary
+2 WalkPreparations Walk
+0
+0
+2 WalkPreparations Walk
+3 WalkPreparations Walk Payment
 */
 
-enum cmd_code {none, worry, quiet, come, worry_count};
+enum cmd_code {none, add, next, dump};
 cmd_code hashit(const string & cmd)
 {
-    if (cmd == "WORRY") return worry;
-    if (cmd == "QUIET") return quiet;
-    if (cmd == "COME") return come;
-    if (cmd == "WORRY_COUNT") return worry_count;
-    return none;
+    if (cmd == "ADD") return cmd_code::add;
+    if (cmd == "NEXT") return cmd_code::next;
+    if (cmd == "DUMP") return cmd_code::dump;
+    return cmd_code::none;
 }
 
 struct command {
@@ -51,19 +57,22 @@ int main()
         commands.push_back({c, prm});
     }
 
-    vector<bool> qp;
+    vector<int> qp;
+    int worried = 0; 
     for (int i = 0; i < commands.size(); ++i)
     {
         switch (commands[i].cmd)
         {
         case worry_count:
-            cout << count(begin(qp), end(qp), true) << endl;
+            worried = 0; 
+            for (auto j : qp) worried += j;
+            cout << worried << endl;
             break;
         case worry:
-            qp[commands[i].prm] = true;
+            qp[commands[i].prm] = 1;
             break;
         case quiet:
-            qp[commands[i].prm] = false;
+            qp[commands[i].prm] = 0;
             break;
         case come:
             qp.resize(qp.size() + commands[i].prm, 0);
