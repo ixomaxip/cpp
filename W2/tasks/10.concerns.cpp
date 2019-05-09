@@ -17,6 +17,7 @@ DUMP 30
 DUMP 28
 ADD 28 Payment
 DUMP 28
+
 output
 1 Salary
 2 WalkPreparations Walk
@@ -40,42 +41,69 @@ struct command {
     int prm;
 };
 
+vector<vector<vector<string>>> get_empty_calendar()
+{
+    vector<vector<vector<string>>> c;
+    for (auto  d : {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31})
+    {
+        vector<vector<string>> todos(d);
+        c.push_back(todos);
+    }
+
+    return c;
+}
+
 int main()
 {
     int N;
     cin >> N;
 
-    vector<command> commands;
+    vector<vector<vector<string>>> c = get_empty_calendar();
+    int nxt = 0;
+    vector<vector<string>>  curr_month = c[nxt];
+    string cmd;
     for (int i = 0; i < N; ++i)
     {
-        string cmd;
-        int prm;
         cin >> cmd;
-        cmd_code c = hashit(cmd);
-        if (c != worry_count)
-            cin >> prm;
-        commands.push_back({c, prm});
-    }
-
-    vector<int> qp;
-    int worried = 0; 
-    for (int i = 0; i < commands.size(); ++i)
-    {
-        switch (commands[i].cmd)
+        int day;
+        string todo;
+        switch (hashit(cmd))
         {
-        case worry_count:
-            worried = 0; 
-            for (auto j : qp) worried += j;
-            cout << worried << endl;
+        case cmd_code::add:
+            cin >> day;
+            cin >> todo;
+            curr_month[day-1].push_back(todo);
             break;
-        case worry:
-            qp[commands[i].prm] = 1;
+        case cmd_code::next:
+            ++nxt;
+            if (nxt > 11)
+                nxt = 0;
+
+            for (int d = 0; d < curr_month.size(); ++d)
+            {
+                if (d < c[nxt].size())
+                {
+                    c[nxt][d] = curr_month[d];
+                }
+                else
+                {
+                    c[nxt][c[nxt].size() - 1].insert(end(c[nxt][c[nxt].size() - 1]), begin(curr_month[d]), end(curr_month[d]));
+                }                
+            }
+            curr_month = c[nxt];
             break;
-        case quiet:
-            qp[commands[i].prm] = 0;
+        case cmd_code::dump:
+            cin >> day;
+            if (day > curr_month.size())
+                break;
+            cout << curr_month[day-1].size() << " ";
+            for (auto todo : curr_month[day-1])
+            {
+                cout << todo << ' ';
+            }
+            cout << endl;
             break;
-        case come:
-            qp.resize(qp.size() + commands[i].prm, 0);
+        case cmd_code::none:
             break;
         }
     }
