@@ -19,16 +19,31 @@ int main()
     // m.erase("three");
     // print_map(m);
 
-    vector<string> words = {"one", "two", "one"};
-    map<string, int> cnt;
+    // vector<string> words = {"one", "two", "one"};
+    // map<string, int> cnt;
     // for (const auto & w : words)
     // {
     //     print_map(cnt);
     //     ++cnt[w];
     // }
-    cnt["a"];
 
-    print_map(cnt);
+    // print_map(cnt);
+
+    vector<string> words = {"one", "two", "three"};
+    map<char, vector<string>> grouped;
+    for (const auto & w: words)
+    {
+        grouped[w[0]].push_back(w);
+    }
+    for (const  auto & c : grouped)
+    {
+        cout << c.first << endl;
+        for (const string & w : c.second)
+        {
+            cout << w << " ";
+        }
+        cout << endl;
+    }
 
 
     return 0;
