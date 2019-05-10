@@ -21,11 +21,12 @@ int main()
 
     vector<string> words = {"one", "two", "one"};
     map<string, int> cnt;
-    for (const auto & w : words)
-    {
-        print_map(cnt);
-        ++cnt[w];
-    }
+    // for (const auto & w : words)
+    // {
+    //     print_map(cnt);
+    //     ++cnt[w];
+    // }
+    cnt["a"];
 
     print_map(cnt);
 
