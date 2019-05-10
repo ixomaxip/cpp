@@ -14,5 +14,7 @@ int main()
     map <string, int> m = {{"one", 1}, {"two", 2}, {"three", 3}};
 
     print_map(m);
+    m.erase("three");
+    print_map(m);
     return 0;
 }
