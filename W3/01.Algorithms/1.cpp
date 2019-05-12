@@ -5,11 +5,24 @@
 #include <iomanip>
 using namespace std;
 
+void print(const vector<int>& v, const string& title )
+{
+    cout << title << ": ";
+    for (const auto & i : v)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
+}
+
 int main()
 {
-    string s1 = "abc", s2 = "bca";
-    cout << min(s1,s2) << endl;
-    cout << max(s1,s2) << endl;
+    vector<int> v { 1,3,2,5,4};
+    print(v, "not sorted");
+
+    sort(begin(v), end(v));
+    print(v, "sorted");
+
 
     return 0;
 }
