@@ -17,7 +17,7 @@ void print(const vector<int>& v, const string& title )
 
 int main()
 {
-    vector<int> v { 1,3,2,5,4};
+    vector<int> v { 1,3,2,5,4,2};
     int cnt = 0;
     for (auto i : v)
     {
@@ -25,6 +25,8 @@ int main()
             ++cnt;
     }
     cout << cnt << endl;
+
+    cout << count(begin(v), end(v), 2) << endl;
 
     return 0;
 }
