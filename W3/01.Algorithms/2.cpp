@@ -19,9 +19,11 @@ int main()
 {
     vector<int> v { 1,3,2,5,4,2};
     int cnt = 0;
+    int thr;
+    cin >> thr;
 
-    cout << count_if(begin(v), end(v), [](int x ) {return x > 2;}) << endl;
-    cout << count_if(begin(v), end(v), [](int x ) {return x < 2;}) << endl;
+    cout << count_if(begin(v), end(v), [thr](int x ) {return x > thr;}) << endl;
+    
 
     return 0;
 }
