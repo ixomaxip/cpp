@@ -7,8 +7,9 @@ using namespace std;
 
 int main()
 {
-    cout << min(2,3) << endl;
-    cout << max(2,3) << endl;
+    string s1 = "abc", s2 = "bca";
+    cout << min(s1,s2) << endl;
+    cout << max(s1,s2) << endl;
 
     return 0;
 }
