@@ -6,16 +6,7 @@ using namespace std;
 
 void prt_parity(int x)
 {
-    string parity;
-    if (x % 2 == 0)
-    {
-        parity = "even";
-    }
-    else
-    {
-        parity = "odd";
-    }
-    
+    string parity = (x % 2 == 0) ? "even" : "odd";    
     cout << x << " is " << parity << endl;
 }
 
