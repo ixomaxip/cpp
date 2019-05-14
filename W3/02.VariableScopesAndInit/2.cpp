@@ -4,27 +4,23 @@
 using namespace std;
 
 
-void prt_int()
+void prt_parity(int x)
 {
-    int x;
-    cout << x << endl;
-}
-
-void prt_dbl()
-{
-    double x = 3.14;
-    cout << x << endl;
+    string parity;
+    if (x % 2 == 0)
+    {
+        parity = "even";
+    }
+    else
+    {
+        parity = "odd";
+    }
+    
+    cout << x << " is " << parity << endl;
 }
 
 int main()
-{
-    prt_int();
-    prt_dbl();
-    prt_int();
-    /* out:
-    21845
-    3.14
-    1074339512
-    */
+{   
+    prt_parity(5);
     return 0;
 }
