@@ -10,8 +10,29 @@ void prt_parity(int x)
     cout << x << " is " << parity << endl;
 }
 
+void prt_positivity(int x)
+{
+    string positivity;
+    if (x > 0)
+    {
+        positivity = "positive";
+    }
+    else if (x < 0)
+    {
+        positivity = "negative";
+    }
+    else
+    {
+        positivity = "zero";
+    }
+    cout << x << " is " << positivity << endl;
+    
+}
+
 int main()
 {   
-    prt_parity(5);
+    prt_positivity(5);
+    prt_positivity(0);
+    prt_positivity(-1);
     return 0;
 }
