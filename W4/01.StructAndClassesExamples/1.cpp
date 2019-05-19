@@ -5,7 +5,7 @@ using namespace std;
 struct Day
 {
     int value;
-    Day(int new_val)
+    explicit Day(int new_val)
     {
         value = new_val;
     }
@@ -13,7 +13,7 @@ struct Day
 struct Month
 {
     int value;
-    Month(int new_val)
+    explicit Month(int new_val)
     {
         value = new_val;
     }
@@ -21,7 +21,7 @@ struct Month
 struct Year
 {
     int value;
-    Year(int new_val)
+    explicit Year(int new_val)
     {
         value = new_val;
     }
