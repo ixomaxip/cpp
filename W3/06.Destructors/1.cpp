@@ -23,6 +23,13 @@ public:
         dst = new_dst;
         upd_len();
     }
+    ~Route()
+    {
+        for (const string& entr : compute_distance_log)
+        {
+            cout << entr << endl;
+        }
+    }
     string get_src() const
     {
         return src;
@@ -38,7 +45,7 @@ public:
     }
     void set_dst(const string& new_dst)
     {
-        src = new_dst;
+        dst = new_dst;
         upd_len();
     }
 private:
@@ -61,7 +68,8 @@ void prt_route(const Route& rt)
 
 int main()
 {
-    Route rt;
-    prt_route(rt);
+    Route rt("Moscow", "Saint Petersburg");
+    rt.set_src("Vyborg");
+    rt.set_dst("Vologda");
     return 0;
 }
