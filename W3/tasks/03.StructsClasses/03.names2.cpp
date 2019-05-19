@@ -81,14 +81,14 @@ private:
         {
             return "";
         }
-        string curr_name = names[0];
+        string name = names[0];
         int cnt = 0;
-        string hist_names;
+        // string hist_names;
         for (int i = 1; i < names.size(); ++i)
         {
             if (names[i] != names[i-1])
             {
-                name += (i == 1) ? " (" : ", ";
+                name += (cnt == 0) ? " (" : ", ";
                 name += names[i];
                 ++cnt;
             }
