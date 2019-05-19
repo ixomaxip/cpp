@@ -10,11 +10,11 @@ int compute_distance(const string& src, const string& dst )
 class Route
 {
 public:
-    string get_src()
+    string get_src() const
     {
         return src;
     }
-    string get_dst()
+    string get_dst() const
     {
         return dst;
     }
