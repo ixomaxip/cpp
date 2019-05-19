@@ -16,19 +16,22 @@ public:
         src = "Msc";
         dst = "SPb";
         upd_len();
+        cout << "Default constructor" << endl;
     }
     Route(const string& new_src, const string& new_dst)
     {
         src = new_src;
         dst = new_dst;
         upd_len();
+        cout << "constructor\n";
     }
     ~Route()
     {
-        for (const string& entr : compute_distance_log)
-        {
-            cout << entr << endl;
-        }
+        // for (const string& entr : compute_distance_log)
+        // {
+        //     cout << entr << endl;
+        // }
+        cout << "destructor\n";
     }
     string get_src() const
     {
@@ -68,8 +71,8 @@ void prt_route(const Route& rt)
 
 int main()
 {
-    Route rt("Moscow", "Saint Petersburg");
-    rt.set_src("Vyborg");
-    rt.set_dst("Vologda");
+    cout << 1 << endl;
+    Route rt;
+    cout << 2 << endl;
     return 0;
 }
