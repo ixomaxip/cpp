@@ -77,7 +77,7 @@ Route get_route()
 
 int main()
 {
-    Route rt = get_route();
+    get_route();
     cout << 2 << endl;
     return 0;
 }
