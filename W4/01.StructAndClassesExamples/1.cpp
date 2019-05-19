@@ -5,14 +5,26 @@ using namespace std;
 struct Day
 {
     int value;
+    Day(int new_val)
+    {
+        value = new_val;
+    }
 };
 struct Month
 {
     int value;
+    Month(int new_val)
+    {
+        value = new_val;
+    }
 };
 struct Year
 {
     int value;
+    Year(int new_val)
+    {
+        value = new_val;
+    }
 };
 
 struct Date
