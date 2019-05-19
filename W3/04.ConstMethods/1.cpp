@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 int compute_distance(const string& src, const string& dst )
@@ -13,7 +14,7 @@ public:
     {
         return src;
     }
-    string get_src()
+    string get_dst()
     {
         return dst;
     }
@@ -37,8 +38,14 @@ private:
     int len;    
 };
 
+void prt_route(const Route& rt)
+{
+    cout << rt.get_src() << "-" << rt.get_dst() << endl;
+}
 
 int main()
 {
-
+    Route rt;
+    prt_route(rt);
+    return 0;
 }
