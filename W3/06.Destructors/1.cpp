@@ -69,14 +69,15 @@ void prt_route(const Route& rt)
     cout << rt.get_src() << "-" << rt.get_dst() << endl;
 }
 
+Route get_route()
+{
+    cout << 1 << endl;
+    return {};
+}
+
 int main()
 {
-    for (int i : {0, 1})
-    {
-        cout << "Step " << i << ": " << 1 << endl;
-        Route rt;
-        cout << "Step " << i << ": " << 2 << endl;
-    }
-    cout << "end" << endl;
+    Route rt = get_route();
+    cout << 2 << endl;
     return 0;
 }
