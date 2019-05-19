@@ -71,8 +71,12 @@ void prt_route(const Route& rt)
 
 int main()
 {
-    cout << 1 << endl;
-    Route rt;
-    cout << 2 << endl;
+    for (int i : {0, 1})
+    {
+        cout << "Step " << i << ": " << 1 << endl;
+        Route rt;
+        cout << "Step " << i << ": " << 2 << endl;
+    }
+    cout << "end" << endl;
     return 0;
 }
