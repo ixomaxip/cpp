@@ -49,7 +49,7 @@ void prt_date(const Date& dt)
 
 int main()
 {
-    Date dt = {10,11,12};
+    Date dt = {{10},{11},{12}};
     prt_date(dt);
     return 0;
 }
