@@ -92,11 +92,6 @@ double compute_image_weight(const Params& params, const Image& image)
 {
     Function func = make_weight_function(params, image);
     return func.Apply(image.quality);
-
-    // double weight = image.quality;
-    // weight -= image.freshness * params.a + params.b;
-    // weight += image.rating * params.c;
-    // return weight;
 }
 
 double compute_quality_by_weight(const Params& params, const Image& image, double weight)
@@ -104,11 +99,6 @@ double compute_quality_by_weight(const Params& params, const Image& image, doubl
     Function func = make_weight_function(params, image);
     func.Invert();
     return func.Apply(weight);
-
-    // double quality = weight;
-    // quality -= image.rating * params.c;
-    // quality += image.freshness * params.a + params.b;
-    // return quality;
 }
 
 int main()
@@ -117,5 +107,6 @@ int main()
     Params prms = {4, 2, 6};
     //10 - 2 * 4 - 2 + 6 * 6 = 36
     cout << compute_image_weight(prms, img) << endl;
+    cout << compute_quality_by_weight(prms, img, 46) << endl;
     return 0;
 }
