@@ -16,20 +16,35 @@ struct Params
     double c;
 };
 
-double compute_image_weight(const Params& params, const Image& image)
+Function make_weight_function(const Params& params, const Image& image)
 {
-    double weight = image.quality;
-    weight -= image.freshness * params.a + params.b;
-    weight += image.rating * params.c;
-    return weight;
+    Function func;
+    function.AddPart('-', image.freshness * params.a + params.b);
+    function.AddPart('+', image.rating * params.c);
+    return func;
 }
 
-double compute_qaul_by_weight(const Params& params, const Image& image, double weight)
+double compute_image_weight(const Params& params, const Image& image)
 {
-    double quality = weight;
-    quality -= image.rating * params.c;
-    quality += image.freshness * params.a + params.b;
-    return quality;
+    Function func = make_weight_function(params, image);
+    return func.Apply(image.quality);
+    
+    // double weight = image.quality;
+    // weight -= image.freshness * params.a + params.b;
+    // weight += image.rating * params.c;
+    // return weight;
+}
+
+double compute_quality_by_weight(const Params& params, const Image& image, double weight)
+{
+    Function func = make_weight_function(params, image);
+    func.Invert();
+    return func.Apply(weight);
+
+    // double quality = weight;
+    // quality -= image.rating * params.c;
+    // quality += image.freshness * params.a + params.b;
+    // return quality;
 }
 
 int main()
