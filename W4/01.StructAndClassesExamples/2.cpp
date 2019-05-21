@@ -31,7 +31,7 @@ public:
         switch (m_operation)
         {
         case '+':
-            return src_val - m_value;
+            return src_val + m_value;
         case '-':
             return src_val - m_value;
         }
@@ -113,5 +113,9 @@ double compute_quality_by_weight(const Params& params, const Image& image, doubl
 
 int main()
 {
+    Image img = {10, 2, 6};
+    Params prms = {4, 2, 6};
+    //10 - 2 * 4 - 2 + 6 * 6 = 36
+    cout << compute_image_weight(prms, img) << endl;
     return 0;
 }
