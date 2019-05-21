@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -19,17 +20,64 @@ struct Params
 
 class FunctionPart
 {
-
+public:
+    FunctionPart(char new_op, double new_val)
+    {
+        m_operation = new_op;
+        m_value = new_val;
+    }
+    double Apply(double src_val) const
+    {
+        switch (m_operation)
+        {
+        case '+':
+            return src_val - m_value;
+        case '-':
+            return src_val - m_value;
+        }
+    }
+    void Invert()
+    {
+        switch (m_operation)
+        {
+        case '+':
+            m_operation = '-';
+            break;
+        case '-':
+            m_operation = '+';
+            break;
+        }
+    }
+private:
+    char m_operation;
+    double m_value;
 };
 
 class Function
 {
 public:
-    void AddPart(char op, double value);
-    double Apply(double value) const;
-    void Invert();
+    void AddPart(char op, double value)
+    {
+        m_parts.push_back({op, value});
+    }
+    double Apply(double value) const
+    {
+        for (const auto& op : m_parts)
+        {
+            value = op.Apply(value);
+        }
+        return value;
+    }
+    void Invert()
+    {
+        for (auto& op : m_parts)
+        {
+            op.Invert();
+        }
+        reverse(begin(m_parts), end(m_parts));
+    }
 private:
-    vector<FunctionPart> parts;
+    vector<FunctionPart> m_parts;
 };
 
 Function make_weight_function(const Params& params, const Image& image)
