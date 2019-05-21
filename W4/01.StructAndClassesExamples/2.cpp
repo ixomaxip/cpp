@@ -27,6 +27,7 @@ double compute_image_weight(const Params& params, const Image& image)
 double compute_qaul_by_weight(const Params& params, const Image& image, double weight)
 {
     double quality = weight;
+    quality -= image.rating * params.c;
     quality += image.freshness * params.a + params.b;
     return quality;
 }
