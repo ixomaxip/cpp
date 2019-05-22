@@ -5,14 +5,21 @@ using namespace std;
 
 int main()
 {
-    ifstream input("test_data.txt");
-    // input.ignore();
+    ifstream input("test__data.txt");
+    
     string line;
-
-    while (getline(input, line))
+    if (input.is_open())
     {
-        cout <<  line << endl;
+        while (getline(input, line))
+        {
+            cout <<  line << endl;
+        }
+        cout << "all done" << endl;
     }
-
+    else
+    {
+        cout << "error" << endl;
+    }
+    
     return 0;
 }
