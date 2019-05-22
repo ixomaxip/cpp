@@ -5,24 +5,28 @@
 #include <iomanip>
 using namespace std;
 
-int main()
-{
-    vector<string> names = {"a", "b", "c"};
-    vector<double> vels = {5, 0.01, 0.00005};
 
-    for (const auto& n : names)
+void prt(const vector<string> nms, const vector<double> vals, int w)
+{  
+    for (const auto& n : nms)
     {
-        cout << setw(10) << n << ' ';
+        cout << setw(w) << n << ' ';
     }
     cout << endl;
     cout << fixed << setprecision(2);
-    for (const auto& n : vels)
+    for (const auto& n : vals)
     {
-        cout << setw(10);
+        cout << setw(w);
         cout << n << ' ';
     }
     cout << endl;
-    
+}
+
+int main()
+{
+    vector<string> names = {"a", "b", "c"};
+    vector<double> vals = {5, 0.01, 0.00005};   
+    prt(names, vals, 5);
 
     return 0;
 }
