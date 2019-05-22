@@ -8,6 +8,7 @@ using namespace std;
 
 void prt(const vector<string> nms, const vector<double> vals, int w)
 {  
+    cout << setw(50) << setfill('=') << "" << endl;
     cout << setfill('.');
     cout << left;
     for (const auto& n : nms)
@@ -22,6 +23,7 @@ void prt(const vector<string> nms, const vector<double> vals, int w)
         cout << n << ' ';
     }
     cout << endl;
+    cout << setw(50) << setfill('=') << "" << endl;
 }
 
 int main()
