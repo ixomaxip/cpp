@@ -5,18 +5,17 @@ using namespace std;
 
 int main()
 {
-    ifstream input("date.txt");
-    
-    int year = 0, month = 0, day = 0;
-    if (input)
+    const string path = "out.txt";
+    ofstream fd_out(path);
+    fd_out << "hello" << endl;
+    ifstream fd_in(path);
+    if (fd_in)
     {
-        input >> year;
-        input.ignore(1);
-        input >> month;
-        input.ignore(1);
-        input >> day;
+        string line;
+        while(getline(fd_in, line))
+        {
+            cout << line << endl;
+        }
     }
-    cout << year << " " << month << " " << day << endl;
-    
     return 0;
 }
