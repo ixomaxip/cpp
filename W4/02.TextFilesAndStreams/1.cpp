@@ -5,10 +5,10 @@ using namespace std;
 
 int main()
 {
-    ifstream input("test__data.txt");
+    ifstream input("test_data.txt");
     
     string line;
-    if (input.is_open())
+    if (input)
     {
         while (getline(input, line))
         {
