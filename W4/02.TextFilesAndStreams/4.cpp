@@ -12,13 +12,13 @@ int main()
 
     for (const auto& n : names)
     {
-        cout << n << ' ';
+        cout << setw(10) << n << ' ';
     }
     cout << endl;
     cout << fixed << setprecision(2);
-    cout << setw(10);
     for (const auto& n : vels)
     {
+        cout << setw(10);
         cout << n << ' ';
     }
     cout << endl;
