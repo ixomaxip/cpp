@@ -9,6 +9,7 @@ using namespace std;
 void prt(const vector<string> nms, const vector<double> vals, int w)
 {  
     cout << setfill('.');
+    cout << left;
     for (const auto& n : nms)
     {
         cout << setw(w) << n << ' ';
