@@ -19,8 +19,8 @@ void read_all(const string& path)
 int main()
 {
     const string path = "out.txt";
-    ofstream fd_out(path);
-    fd_out << "hello" << endl;    
+    ofstream fd_out(path, ios::app);
+    fd_out << "world" << endl;
     read_all(path);
     return 0;
 }
