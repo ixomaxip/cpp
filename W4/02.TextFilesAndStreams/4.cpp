@@ -15,7 +15,7 @@ int main()
         cout << n << ' ';
     }
     cout << endl;
-    cout << fixed;
+    cout << fixed << setprecision(2);
     for (const auto& n : vels)
     {
         cout << n << ' ';
