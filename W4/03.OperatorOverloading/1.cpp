@@ -23,18 +23,18 @@ Duration read_duration(istream& stream)
     return Duration {h, m};
 }
 
-void operator<<(ostream& stream, const Duration& dur)
+ostream& operator<<(ostream& stream, const Duration& dur)
 {
     stream << setfill('0');
     stream << setw(2) << dur.hour << ':'
            << setw(2) << dur.min;
+    return stream;
 }
 
 int main()
 {
     stringstream dur_ss("01:50");
     Duration d1 = read_duration(dur_ss);
-    cout << d1;
-    cout << endl;
+    cout << d1 << endl;
     return 0;
 }
