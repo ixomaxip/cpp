@@ -13,21 +13,11 @@ struct Duration
 
     Duration(int h = 0, int m = 0)
     {
-        hour = h;
-        min = m;
+        int total = h * 60 + m;
+        hour = total / 60;
+        min = total % 60;
     }
 };
-
-Duration read_duration(istream& stream)
-{
-    int h = 0;
-    int m = 0;
-    stream >> h;
-    stream.ignore(1);
-    stream >> m;
-
-    return Duration {h, m};
-}
 
 ostream& operator<<(ostream& stream, const Duration& dur)
 {
@@ -54,7 +44,7 @@ int main()
 {
     stringstream dur_ss("03:50");
     Duration d1;
-    Duration d2 = {0, 5};
+    Duration d2 = {0, 35};
     dur_ss >> d1;
     cout << d1 + d2 << endl;
     return 0;
