@@ -31,10 +31,19 @@ ostream& operator<<(ostream& stream, const Duration& dur)
     return stream;
 }
 
+istream& operator>>(istream& stream, Duration& dur)
+{
+    stream >> dur.hour;
+    stream.ignore(1);
+    stream >> dur.min;
+    return stream;
+}
+
 int main()
 {
-    stringstream dur_ss("01:50");
-    Duration d1 = read_duration(dur_ss);
+    stringstream dur_ss("03:50");
+    Duration d1 {0, 0};
+    dur_ss >> d1;
     cout << d1 << endl;
     return 0;
 }
