@@ -40,12 +40,41 @@ Duration operator+(const Duration& lhs, const Duration& rhs)
     return Duration(lhs.hour + rhs.hour, lhs.min + rhs.min);
 }
 
+bool operator<(const Duration& lhs, const Duration& rhs)
+{
+    if (lhs.hour == rhs.hour)
+    {
+        return lhs.min < rhs.min;
+    }
+    else
+    {
+        return lhs.hour < rhs.hour;
+    }
+    
+}
+
+void print_vector(const vector<Duration>& v)
+{
+    for (const auto& d : v)
+    {
+        cout << d << " ";
+    }
+
+    cout << endl;
+}
+
 int main()
 {
     stringstream dur_ss("03:50");
     Duration d1;
-    Duration d2 = {0, 35};
     dur_ss >> d1;
-    cout << d1 + d2 << endl;
+
+    Duration d2 = {0, 35};
+    Duration d3 = d1 + d2;
+
+    vector<Duration> v {d3, d2, d1};
+    print_vector(v);
+    sort(v.begin(), v.end());
+    print_vector(v);
     return 0;
 }
