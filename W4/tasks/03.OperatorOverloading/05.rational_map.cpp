@@ -91,6 +91,12 @@ ostream& operator<<(ostream& stream, const Rational& rat)
 
 istream& operator>>(istream& stream, Rational& rat)
 {
+    // int n, d;
+    // char c;
+    // is >> n >> c >> d;
+    // if (is && c == '/') {
+    //      r = Rational(n, d);
+    // }
     int num = rat.Numerator();
     int den = rat.Denominator();
     stream >> num;
@@ -107,6 +113,7 @@ bool operator== (const Rational& lhs, const Rational& rhs)
 
 bool operator< (const Rational& lhs, const Rational& rhs)
 {
+    //return (lhs - rhs).Numerator() < 0;
     if (lhs.Numerator() > 0 && rhs.Numerator() > 0)
     {
         return lhs.Numerator() * rhs.Denominator() < rhs.Numerator() * lhs.Denominator();
