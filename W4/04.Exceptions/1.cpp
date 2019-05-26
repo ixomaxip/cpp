@@ -41,11 +41,19 @@ Date parse_date(const string& s)
 
 int main()
 {
+
     string date_str = "2017a01b25";
-    Date dt = parse_date(date_str);
-    cout ;
-    cout    << setw(2) << setfill('0') << dt.day << "."
-            << setw(2) << setfill('0') << dt.month << "."
-            << setw(2) << setfill('0') << dt.year << endl;
+
+    try
+    {
+        Date dt = parse_date(date_str);
+        cout << setw(2) << setfill('0') << dt.day << "."
+             << setw(2) << setfill('0') << dt.month << "."
+             << setw(2) << setfill('0') << dt.year << endl;
+    }
+    catch(const std::exception& e)
+    {
+        cout << e.what() << endl;
+    }
     return 0;
 }
