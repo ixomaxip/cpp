@@ -13,14 +13,27 @@ struct Date
     int day;
 };
 
+void ensure_next_symbol_and_skip(stringstream& stream)
+{
+    if (stream.peek() != '/')
+    {
+        throw exception();
+    }
+    stream.ignore(1);
+}
+
 Date parse_date(const string& s)
 {
     stringstream stream(s);
     Date dt;
     stream >> dt.year;
-    stream.ignore(1);
+    
+    ensure_next_symbol_and_skip(stream);
+
     stream >> dt.month;
-    stream.ignore(1);
+
+    ensure_next_symbol_and_skip(stream);
+    
     stream >> dt.day;
     stream.ignore(1);
     return dt;
@@ -28,7 +41,7 @@ Date parse_date(const string& s)
 
 int main()
 {
-    string date_str = "2017/01/25";
+    string date_str = "2017a01b25";
     Date dt = parse_date(date_str);
     cout ;
     cout    << setw(2) << setfill('0') << dt.day << "."
