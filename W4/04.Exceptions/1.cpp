@@ -30,6 +30,9 @@ int main()
 {
     string date_str = "2017/01/25";
     Date dt = parse_date(date_str);
-    cout << dt.day << "-" << dt.month << "-" << dt.year << endl;
+    cout ;
+    cout    << setw(2) << setfill('0') << dt.day << "."
+            << setw(2) << setfill('0') << dt.month << "."
+            << setw(2) << setfill('0') << dt.year << endl;
     return 0;
 }
