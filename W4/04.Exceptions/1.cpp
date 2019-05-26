@@ -17,7 +17,9 @@ void ensure_next_symbol_and_skip(stringstream& stream)
 {
     if (stream.peek() != '/')
     {
-        throw exception();
+        stringstream ss;
+        ss << "expected /, but has: " << char(stream.peek());
+        throw runtime_error(ss.str());
     }
     stream.ignore(1);
 }
