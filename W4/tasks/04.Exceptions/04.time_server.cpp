@@ -5,6 +5,10 @@ using namespace std;
 
 string AskTimeServer()
 {
+    string response = "01:34:32";
+    // throw system_error(error_code());
+    // throw invalid_argument("");
+    return response;
 }
 
 class TimeServer
