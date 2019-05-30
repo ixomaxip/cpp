@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <set>
 #include <algorithm>
 #include <sstream>
 #include <iomanip>
@@ -46,14 +47,24 @@ public:
     {
 
     }
-    bool DeleteEvent(const Date& date, const string& event);
-    int  DeleteDate(const Date& date);
+    bool DeleteEvent(const Date& date, const string& event)
+    {
 
-    void Find(const Date& date) const;
+    }
+    int  DeleteDate(const Date& date)
+    {
 
-    void Print() const;
+    }
+    set<string> Find(const Date& date) const
+    {
+
+    }
+    void Print() const
+    {
+
+    }
 private:
-    map<Date, vector<string>> events;
+    map<Date, set<string>> events;
 
 };
 
@@ -100,37 +111,52 @@ Date parse_date(const string& date)
 }
 
 
-void parse_cmd(const string& command)
+void exec_cmd(const string& command, Database& db)
 {
     stringstream ss(command);
-    string cmd;
+    string cmd, str_date, ev;
     ss >> cmd;
+    ss >> str_date;
+    ss >> ev;
 
     if (cmd == "Add")
     {
         string str_date;
-        ss >> str_date;
         Date dt = parse_date(str_date);
-        
-        string ev;
-        ss >> ev;
-
-        cout << dt << " ev: " << ev << endl;
-
-        // db.AddEvent(dt, ev);
+        db.AddEvent(dt, ev);
     }
     else if (cmd == "Del")
     {
+        Date dt = parse_date(str_date);
+        if (ev.empty())
+        {
+            int N = db.DeleteDate(dt);
+            cout << "Deleted " << N << " events" << endl;
+        }
+        else
+        {
+            if (db.DeleteEvent(dt, ev))
+            {
+                cout << "Deleted successfully" << endl;
+            }
+            else
+            {
+                cout << "Event not found" << endl;
+            }            
+        }
         
     }
     else if (cmd == "Find")
     {
+        Date dt = parse_date(str_date);
+        set<string> db.Find(dt);
         
     }
     else if (cmd == "Print")
     {
         
     }
+    else if (cmd == ""){}
     else
     {
         string err = "Unknown command: " + cmd;
@@ -147,14 +173,13 @@ int main()
     {
         try
         {
-            parse_cmd(command);
+            exec_cmd(command, db);
         }
         catch(const exception& e)
         {
             cout << e.what() << endl;
+            return 1;
         }
-        
-        
     }
 
 return 0;
