@@ -52,7 +52,7 @@ class Database {
 public:
     void AddEvent(const Date& date, const string& event)
     {
-        cout << "AddEvent: " << event << " on date " << date << endl;
+        events[date].insert(event);
     }
     bool DeleteEvent(const Date& date, const string& event)
     {
@@ -68,7 +68,6 @@ public:
     }
     void Print() const
     {
-        cout << "Print" << endl;
         for (const auto& item : events)
         {
             for (const auto& ev : item.second)
