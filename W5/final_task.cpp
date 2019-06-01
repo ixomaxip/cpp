@@ -36,6 +36,13 @@ private:
     int day;
 };
 
+ostream& operator<<(ostream& stream, const Date& dt)
+{
+    stream << setw(4) << setfill('0') << dt.GetYear() << "-"
+           << setw(2) << setfill('0') << dt.GetMonth() << "-"
+           << setw(2) << setfill('0') << dt.GetDay();
+}
+
 bool operator<(const Date& lhs, const Date& rhs)
 {
 
@@ -45,23 +52,30 @@ class Database {
 public:
     void AddEvent(const Date& date, const string& event)
     {
-
+        cout << "AddEvent: " << event << " on date " << date << endl;
     }
     bool DeleteEvent(const Date& date, const string& event)
     {
-
+        cout << "DeleteEvent: " << event << " on date " << date << endl;
     }
     int  DeleteDate(const Date& date)
     {
-
+        cout << "DeleteDate: " << date << endl;
     }
     set<string> Find(const Date& date) const
-    {
-
+    {   
+        cout << "Find on date: " << date << endl;
     }
     void Print() const
     {
-
+        cout << "Print" << endl;
+        for (const auto& item : events)
+        {
+            for (const auto& ev : item.second)
+            {
+                cout << item.first << " " << ev << endl;
+            }
+        }
     }
 private:
     map<Date, set<string>> events;
@@ -79,12 +93,6 @@ void valiDate(stringstream& stream, const string& str_dt)
     stream.ignore(1);
 }
 
-ostream& operator<<(ostream& stream, const Date& dt)
-{
-    stream << setw(4) << setfill('0') << dt.GetYear() << "-"
-           << setw(2) << setfill('0') << dt.GetMonth() << "-"
-           << setw(2) << setfill('0') << dt.GetDay();
-}
 
 Date parse_date(const string& date)
 {
@@ -121,7 +129,6 @@ void exec_cmd(const string& command, Database& db)
 
     if (cmd == "Add")
     {
-        string str_date;
         Date dt = parse_date(str_date);
         db.AddEvent(dt, ev);
     }
@@ -149,12 +156,11 @@ void exec_cmd(const string& command, Database& db)
     else if (cmd == "Find")
     {
         Date dt = parse_date(str_date);
-        set<string> db.Find(dt);
-        
+        set<string> events = db.Find(dt);        
     }
     else if (cmd == "Print")
     {
-        
+        db.Print();
     }
     else if (cmd == ""){}
     else
