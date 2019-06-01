@@ -68,7 +68,9 @@ public:
     }
     int  DeleteDate(const Date& date)
     {
-        cout << "DeleteDate: " << date << endl;
+        int deleted = events[date].size();
+        events.erase(date);
+        return deleted;
     }
     set<string> Find(const Date& date) const
     {   
