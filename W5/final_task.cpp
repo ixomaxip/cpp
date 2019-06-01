@@ -53,8 +53,7 @@ bool operator<(const Date& lhs, const Date& rhs)
         }
         return lhs.GetMonth() < rhs.GetMonth();
     }
-    lhs.GetYear() < rhs.GetYear();
-
+    return lhs.GetYear() < rhs.GetYear();
 }
 
 class Database {
