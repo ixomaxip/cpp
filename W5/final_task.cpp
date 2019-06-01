@@ -106,26 +106,41 @@ private:
     map<Date, set<string>> events;
 };
 
-void valiDate(stringstream& stream, const string& str_dt)
+bool valiDate(stringstream& stream, char delim, const string& str_dt)
 {
     if (stream.peek() != '-')
     {
-        stringstream ss;
-        ss << "Wrong date format: " << str_dt;
-        throw runtime_error(ss.str());
+        return false;
     }
-    stream.ignore(1);
+    else
+    {
+        stream.ignore(1);
+        return true;
+    }
+    
 }
 
 Date parse_date(const string& date)
 {
+    bool is_valid = false;
     stringstream ss(date);
     int y, m, d;
     ss >> y;
-    valiDate(ss, date);
+    is_valid = valiDate(ss, '-', date);
     ss >> m;
-    valiDate(ss, date);
+    is_valid = valiDate(ss, '-', date);
     ss >> d;
+    string end_date;
+    ss >> end_date;
+    if (!end_date.empty())
+        is_valid = false;
+
+    if (!is_valid)
+    {
+        stringstream ss;
+        ss << "Wrong date format: " << date;
+        throw runtime_error(ss.str());
+    }
 
     if (m < 1 or m > 12)
     {
@@ -145,18 +160,20 @@ Date parse_date(const string& date)
 void exec_cmd(const string& command, Database& db)
 {
     stringstream ss(command);
-    string cmd, str_date, ev;
-    ss >> cmd;
-    ss >> str_date;
-    ss >> ev;
-
+    string cmd;
+    string str_date, ev;
+    ss >> cmd >> str_date >> ev;
     if (cmd == "Add")
     {
+        // string str_date, ev;
+        // ss >> str_date >> ev;
         Date dt = parse_date(str_date);
         db.AddEvent(dt, ev);
     }
     else if (cmd == "Del")
     {
+        // string str_date, ev;
+        // ss >> str_date >> ev;
         Date dt = parse_date(str_date);
         if (ev.empty())
         {
@@ -165,12 +182,15 @@ void exec_cmd(const string& command, Database& db)
         }
         else
         {
-            if (db.DeleteEvent(dt, ev)) {cout << "Deleted successfully" << endl;}
-            else{cout << "Event not found" << endl;}            
+            bool res = db.DeleteEvent(dt, ev);
+            if (res) {cout << "Deleted successfully" << endl;}
+            else {cout << "Event not found" << endl;}           
         }        
     }
     else if (cmd == "Find")
     {
+        // string str_date;
+        // ss >> str_date;
         Date dt = parse_date(str_date);
         db.Find(dt);
     }
