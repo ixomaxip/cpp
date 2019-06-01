@@ -41,6 +41,7 @@ ostream& operator<<(ostream& stream, const Date& dt)
     stream << setw(4) << setfill('0') << dt.GetYear() << "-"
            << setw(2) << setfill('0') << dt.GetMonth() << "-"
            << setw(2) << setfill('0') << dt.GetDay();
+    return stream;
 }
 
 bool operator<(const Date& lhs, const Date& rhs)
