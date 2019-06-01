@@ -45,6 +45,15 @@ ostream& operator<<(ostream& stream, const Date& dt)
 
 bool operator<(const Date& lhs, const Date& rhs)
 {
+    if (lhs.GetYear() == rhs.GetYear())
+    {
+        if (lhs.GetMonth() == rhs.GetMonth())
+        {
+            return lhs.GetDay() < rhs.GetDay();
+        }
+        return lhs.GetMonth() < rhs.GetMonth();
+    }
+    lhs.GetYear() < rhs.GetYear();
 
 }
 
