@@ -72,9 +72,15 @@ public:
         events.erase(date);
         return deleted;
     }
-    set<string> Find(const Date& date) const
-    {   
-        cout << "Find on date: " << date << endl;
+    void Find(const Date& date) const
+    {
+        if (events.count(date) > 0)
+        {
+            for (const auto& ev : events.at(date))
+            {
+                cout << ev << endl;
+            }
+        }        
     }
     void Print() const
     {
@@ -99,7 +105,6 @@ private:
     map<Date, set<string>> events;
 };
 
-
 void valiDate(stringstream& stream, const string& str_dt)
 {
     if (stream.peek() != '-')
@@ -110,7 +115,6 @@ void valiDate(stringstream& stream, const string& str_dt)
     }
     stream.ignore(1);
 }
-
 
 Date parse_date(const string& date)
 {
@@ -160,21 +164,14 @@ void exec_cmd(const string& command, Database& db)
         }
         else
         {
-            if (db.DeleteEvent(dt, ev))
-            {
-                cout << "Deleted successfully" << endl;
-            }
-            else
-            {
-                cout << "Event not found" << endl;
-            }            
-        }
-        
+            if (db.DeleteEvent(dt, ev)) {cout << "Deleted successfully" << endl;}
+            else{cout << "Event not found" << endl;}            
+        }        
     }
     else if (cmd == "Find")
     {
         Date dt = parse_date(str_date);
-        set<string> events = db.Find(dt);        
+        db.Find(dt);
     }
     else if (cmd == "Print")
     {
