@@ -106,7 +106,7 @@ private:
     map<Date, set<string>> events;
 };
 
-bool valiDate(stringstream& stream, char delim, const string& str_dt)
+bool valiDate(stringstream& stream, const string& str_dt)
 {
     if (stream.peek() != '-')
     {
@@ -122,20 +122,11 @@ bool valiDate(stringstream& stream, char delim, const string& str_dt)
 
 Date parse_date(const string& date)
 {
-    bool is_valid = false;
     stringstream ss(date);
     int y, m, d;
-    ss >> y;
-    is_valid = valiDate(ss, '-', date);
-    ss >> m;
-    is_valid = valiDate(ss, '-', date);
-    ss >> d;
-    string end_date;
-    ss >> end_date;
-    if (!end_date.empty())
-        is_valid = false;
-
-    if (!is_valid)
+    char d1, d2;
+    ss >> y >> d1 >> m >> d2 >> d;
+    if (d1 != '-' || d2 != '-' || !ss || ss.peek() != EOF)
     {
         stringstream ss;
         ss << "Wrong date format: " << date;
