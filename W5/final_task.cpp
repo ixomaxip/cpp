@@ -65,7 +65,7 @@ public:
     }
     bool DeleteEvent(const Date& date, const string& event)
     {
-        cout << "DeleteEvent: " << event << " on date " << date << endl;
+        return events[date].erase(event);
     }
     int  DeleteDate(const Date& date)
     {
@@ -198,3 +198,5 @@ int main()
 
 return 0;
 }
+
+
