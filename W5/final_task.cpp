@@ -86,9 +86,18 @@ public:
         }
     }
 private:
+    // struct comp //not necessary, just for fun
+    // {
+    //     bool operator()(const string& lhs, const string& rhs)
+    //     {
+    //         lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs),
+    //         [](char cl, char cr) { return tolower(cl) < tolower(cr); });
+    //     }
+    // };
+    // map<Date, set<string, comp>> events;
     map<Date, set<string>> events;
-
 };
+
 
 void valiDate(stringstream& stream, const string& str_dt)
 {
