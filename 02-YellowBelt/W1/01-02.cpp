@@ -5,14 +5,23 @@
 
 using namespace std;
 
+
+void prt_avg()
+{
+    vector<int> t = {-8, -7, 3};
+    
+    int sum = 0;
+    for (int x : t)
+    {
+        sum += x;
+    }
+    int avg = sum / t.size();
+    cout << avg << endl;
+}
+
 int main()
 {
-    int x = -2'000'000'000;
-    unsigned int y = x;
-
-    cout << x << " " << y << endl;
-
-
+    cout << (-1 < 1u) << endl;
 
     return 0;
 }
