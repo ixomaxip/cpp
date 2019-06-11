@@ -1,14 +1,18 @@
 #include <iostream>
 #include <vector>
+#include <limits>
+
 
 using namespace std;
 
 int main()
 {
-    int x =2'000'000'000;
-    cout << x << " ";
-    x *= 2;
-    cout << x << endl;
+    cout << sizeof(int) << endl;
+    cout << numeric_limits<int>::min() << " ";
+    cout << numeric_limits<int>::max() << endl;
+    cout << "long int size: " << sizeof(long int) << endl;
+    cout << numeric_limits<long int>::max() << endl;
+
 
 
     return 0;
