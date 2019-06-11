@@ -7,8 +7,10 @@ using namespace std;
 
 int main()
 {
-    cout << numeric_limits<int>::max() + 1 << " "
-        << numeric_limits<int>::min() - 1 << endl;
+    int x = -2'000'000'000;
+    unsigned int y = x;
+
+    cout << x << " " << y << endl;
 
 
 
