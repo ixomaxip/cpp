@@ -21,7 +21,16 @@ void prt_avg()
 
 int main()
 {
-    cout << (-1 < 1u) << endl;
+    vector<int> x = {4,5};
+    for (size_t i = 0; i < x.size(); ++i)
+    {
+        cout << i << " " << x[i] << endl;
+    }
+    // or static cats
+    for (int i = 0; i < static_cast<int>(x.size()); ++i)
+    {
+        cout << i << " " << x[i] << endl;
+    }
 
     return 0;
 }
