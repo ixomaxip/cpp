@@ -15,22 +15,12 @@ void prt_avg()
     {
         sum += x;
     }
-    int avg = sum / t.size();
+    int avg = sum / static_cast<int>(t.size());
     cout << avg << endl;
 }
 
 int main()
 {
-    vector<int> x = {4,5};
-    for (size_t i = 0; i < x.size(); ++i)
-    {
-        cout << i << " " << x[i] << endl;
-    }
-    // or static cats
-    for (int i = 0; i < static_cast<int>(x.size()); ++i)
-    {
-        cout << i << " " << x[i] << endl;
-    }
-
+    prt_avg();
     return 0;
 }
