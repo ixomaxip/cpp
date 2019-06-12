@@ -5,22 +5,13 @@
 
 using namespace std;
 
-
-void prt_avg()
-{
-    vector<int> t = {-8, -7, 3};
-    
-    int sum = 0;
-    for (int x : t)
-    {
-        sum += x;
-    }
-    int avg = sum / static_cast<int>(t.size());
-    cout << avg << endl;
-}
-
 int main()
 {
-    prt_avg();
+    vector<int> v;// = {1,4,6,4};
+
+    for (size_t i = 0; i < v.size() - 1; i++)
+    {
+        cout << v[i] << endl;
+    }
     return 0;
 }
