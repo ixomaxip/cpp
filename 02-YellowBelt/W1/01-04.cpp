@@ -24,6 +24,24 @@ void process_request_1(set<int>& numbers, const string& request_type, int reques
     }
 }
 
+void process_request_2(set<int>& numbers, int request_type, int request_data)
+{
+    if (request_type == 0)
+    {
+        numbers.insert(request_data);
+    } else if (request_type == 1)
+    {
+        numbers.erase(request_data);
+    } else if (request_type == 2)
+    {
+        if (numbers.count(request_data) == 1)
+        {
+            numbers.erase(request_data);
+            numbers.insert(-request_data);
+        }        
+    }
+}
+
 void prt_set(const set<int>& numbers)
 {
     for (auto n : numbers)
@@ -43,5 +61,13 @@ int main()
     process_request_1(numbers, "REMOVE", -8);
     prt_set(numbers);
     
+
+    process_request_2(numbers, 0, 8);
+    prt_set(numbers);
+    process_request_2(numbers, 2, 8);
+    prt_set(numbers);
+    process_request_2(numbers, 1, -8);
+    prt_set(numbers);
+
     return 0;
 }
