@@ -99,6 +99,7 @@ void test_multiply() {
 
 int main() {
     // matrix X, Y, test_X;
+    // ifstream input("test_input");
     // tie(X, Y, test_X) = read(input);
     // // tie(X, Y, test_X) = read(cin);
     // matrix XT = transpose(X);
