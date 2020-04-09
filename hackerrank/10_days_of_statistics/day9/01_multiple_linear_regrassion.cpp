@@ -10,6 +10,13 @@ using namespace std;
 
 typedef vector<vector<double>> matrix;
 
+
+matrix get_matrix(int n, int m) {
+    matrix X(n, vector<double>(m));
+    return X;
+}
+
+
 void prt_matrix(const matrix& M) {
     for (const auto& row : M) {
         for (const auto& col : row) {
@@ -56,8 +63,9 @@ matrix transpose(const matrix& X) {
 tuple<matrix, matrix, matrix> read(istream& is) {
     int m, n;
     is >> m >> n;
-    matrix X(n, vector<double>(m + 1));
-    matrix Y(n, vector<double>(1));
+    matrix X = get_matrix(n, m+1);
+    matrix Y = get_matrix(n, 1);
+
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j <= m; j++) {
@@ -77,7 +85,7 @@ tuple<matrix, matrix, matrix> read(istream& is) {
 
     int q;
     is >> q;
-    matrix test_X(q,  vector<double>(m));
+    matrix test_X = get_matrix(q,  m);
     for (auto& row : test_X) {
         for (auto& col : row) {
             is >> col;
