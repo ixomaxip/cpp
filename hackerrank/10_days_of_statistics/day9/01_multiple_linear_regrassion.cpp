@@ -56,6 +56,23 @@ matrix transpose(const matrix& X) {
     return Xtr;
 }
 
+matrix get_cofactor(const matrix X, int r, int c) {
+    int n = X.size();
+    matrix result = get_matrix(n - 1, n - 1);
+    int i = 0, j = 0;
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < n; col++) {
+            if (row != r && col != c) {
+                result[i][j++] = X[row][col];
+                if (j == n -1) {
+                    j = 0;
+                    i++;
+                }
+            }
+        }
+    }
+    return result;
+}
 // matrix inverse(const matrix& X) {
 //     return;
 // }
