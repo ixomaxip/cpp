@@ -55,6 +55,17 @@ matrix transpose(const matrix& X) {
     // prt_matrix(Xtr);
     return Xtr;
 }
+void test_transpose() {
+    cout << "transpose: ";
+    matrix A = {{1,2,3}, {4,5,6}, {7,8,9}};
+    matrix test_case = {{1,4,7}, {2,5,8}, {3,6,9}};
+    matrix result = transpose(A);
+    if (result == test_case) {
+        cout << "OK" << endl;
+    } else {
+        cout << "Not OK" << endl;
+    }
+}
 
 matrix get_cofactor(const matrix X, int r, int c) {
     int n = X.size();
@@ -72,6 +83,17 @@ matrix get_cofactor(const matrix X, int r, int c) {
         }
     }
     return result;
+}
+void test_cofactor() {
+    cout << "cofactor: ";
+    matrix A = {{1,2,3,4}, {4,5,6,7}, {7,8,9,0}, {0,9,8,7}};
+    matrix result = get_cofactor(A, 1, 2);
+    matrix test_case = {{1,2,4}, {7,8,0}, {0,9,7}};
+    if (result == test_case) {
+        cout << "OK" << endl;
+    } else {
+        cout << "Not OK" << endl;
+    }
 }
 // matrix inverse(const matrix& X) {
 //     return;
@@ -113,25 +135,35 @@ tuple<matrix, matrix, matrix> read(istream& is) {
 }
 
 void test_multiply() {
+    cout << "multiply: ";
     matrix A = {{1,4,6}};
     matrix B = {{2,3}, {5,8}, {7,9}};
-    prt_matrix(A);
-    prt_matrix(B);
-    prt_matrix(multiply(A, B));
+    matrix result = multiply(A, B);
+    matrix test_case = {{64,89}};
+    if (result == test_case) {
+        cout << "OK" << endl;
+    } else {
+        cout << "Not OK" << endl;
+    }
     // 64 89
 }
 
 
+void run_tests() {
+    test_transpose();
+    test_multiply();
+    test_cofactor();
+}
+
+
 int main() {
-    // matrix X, Y, test_X;
+    run_tests();
     // ifstream input("test_input");
+    // matrix X, Y, test_X;
     // tie(X, Y, test_X) = read(input);
     // // tie(X, Y, test_X) = read(cin);
     // matrix XT = transpose(X);
     // matrix XT_X = multiply(XT, X);
-    test_multiply();
-
-    // cout << endl;
     // prt_matrix(test_X);
     
 
