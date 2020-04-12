@@ -365,6 +365,14 @@ TEST_CASE("Full computation: Y = X * B", "[full]") {
     SECTION("_Y = _X * B") {
         matrix req = {{29.39535}};
         REQUIRE(_Y == req);
-    }
-    
+    }    
+}
+
+TEST_CASE("Main test", "[main]") {
+    ifstream input("test_input");
+    matrix X, Y, _X;
+    tie(X, Y, _X) = read_data(input);
+
+    matrix _Y = calc(X, Y, _X);
+    prt_matrix(_Y);
 }
