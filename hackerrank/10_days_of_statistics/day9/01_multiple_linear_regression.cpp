@@ -5,8 +5,14 @@
 #include <algorithm>
 #include <fstream>
 #include <tuple>
+#include <exception>
+#include <stdexcept>
+
+//tests
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
+
+
 using namespace std;
 
 
@@ -58,7 +64,7 @@ matrix transpose(const matrix& X) {
     return Xtr;
 }
 
-matrix get_cofactor(const matrix X, int r, int c) {
+matrix get_minor(const matrix X, int r, int c) {
     int n = X.size();
     matrix result = get_matrix(n - 1, n - 1);
     int i = 0, j = 0;
@@ -66,7 +72,7 @@ matrix get_cofactor(const matrix X, int r, int c) {
         for (int col = 0; col < n; col++) {
             if (row != r && col != c) {
                 result[i][j++] = X[row][col];
-                if (j == n -1) {
+                if (j == (n - 1)) {
                     j = 0;
                     i++;
                 }
@@ -76,6 +82,21 @@ matrix get_cofactor(const matrix X, int r, int c) {
     return result;
 }
 
+double determinant(const matrix& X) {
+    double det = 0.0;
+    int n = X.size();
+    if (n == 1) {
+        return X[0][0];
+    }
+    
+    int sign = 1;
+    for (int i = 0; i < n; i++) {
+        matrix m = get_minor(X, 0, i);
+        det += sign * X[0][i] * determinant(m);
+        sign = -sign;
+    }
+    return det;
+}
 
 matrix inverse(const matrix& X) {
     matrix result = get_matrix(1,1);
@@ -126,52 +147,6 @@ tuple<matrix, matrix, matrix> read(istream& is) {
     return make_tuple(X, Y, test_X);    
 }
 
-
-void test_transpose() {
-    cout << "transpose: ";
-    matrix A = {{1,2,3}, {4,5,6}, {7,8,9}};
-    matrix test_case = {{1,4,7}, {2,5,8}, {3,6,9}};
-    matrix result = transpose(A);
-    if (result == test_case) {
-        cout << "OK" << endl;
-    } else {
-        cout << "Not OK" << endl;
-    }
-}
-
-void test_multiply() {
-    cout << "multiply: ";
-    matrix A = {{1,4,6}};
-    matrix B = {{2,3}, {5,8}, {7,9}};
-    matrix result = multiply(A, B);
-    matrix test_case = {{64,89}};
-    if (result == test_case) {
-        cout << "OK" << endl;
-    } else {
-        cout << "Not OK" << endl;
-    }
-    // 64 89
-}
-
-void test_cofactor() {
-    cout << "cofactor: ";
-    matrix A = {{1,2,3,4}, {4,5,6,7}, {7,8,9,0}, {0,9,8,7}};
-    matrix result = get_cofactor(A, 1, 2);
-    matrix test_case = {{1,2,4}, {7,8,0}, {0,9,7}};
-    if (result == test_case) {
-        cout << "OK" << endl;
-    } else {
-        cout << "Not OK" << endl;
-    }
-}
-
-void run_tests() {
-    test_transpose();
-    test_multiply();
-    test_cofactor();
-}
-
-
 int _main() {
     ifstream input("test_input");
     matrix X, Y, test_X;
@@ -187,22 +162,6 @@ int _main() {
 
     return 0;
 }
-
-
-
-// int main() {
-//     run_tests();
-//     // ifstream input("test_input");
-//     // matrix X, Y, test_X;
-//     // tie(X, Y, test_X) = read(input);
-//     // // tie(X, Y, test_X) = read(cin);
-//     // matrix XT = transpose(X);
-//     // matrix XT_X = multiply(XT, X);
-//     // prt_matrix(test_X);
-    
-
-//     return 0;
-// }
 
 TEST_CASE("Read data", "[read]") {
     ifstream input("test_input");
@@ -234,10 +193,59 @@ TEST_CASE("Read data", "[read]") {
                         }));
 }
 
-TEST_CASE("Matrix transpose:", "[transpose]") {
+TEST_CASE("Matrix transpose", "[transpose]") {
     REQUIRE(transpose({{1,2,3}, {4,5,6}, {7,8,9}}) == matrix({{1,4,7}, {2,5,8}, {3,6,9}}));
 }
 
-TEST_CASE("Matrix multiply:", "[multiply]") {
+TEST_CASE("Matrix multiply", "[multiply]") {
     REQUIRE(multiply({{1,4,6}}, {{2,3}, {5,8}, {7,9}}) == matrix({{64,89}}));
+}
+
+TEST_CASE("Matrix minor", "[minor]") {
+    matrix A = {{1,2,3,4},
+                {4,5,6,7},
+                {7,8,9,0},
+                {0,9,8,7}};
+    matrix res = get_minor(A, 1, 2);
+    matrix req = {{1,2,4},
+                  {7,8,0},
+                  {0,9,7}};
+    REQUIRE(res == req);
+}
+
+TEST_CASE("Matrix determinant", "[determinant]") {
+    SECTION( "1x1 matrix" ) {
+        matrix m({{5}});
+
+        REQUIRE(determinant(m) == 5.0);
+    }
+    SECTION( "2x2 matrix" ) {
+        matrix m({{1,2}, {3,4}});
+
+        REQUIRE(determinant(m) == -2.0);
+    }
+    
+    SECTION("Ones") {
+        matrix m({{1,0,0,0},
+                  {0,1,0,0},
+                  {0,0,1,0},
+                  {0,0,0,1}});
+
+        REQUIRE(determinant(m) == 1.0);
+    }
+    SECTION("singular matrix det") {
+        matrix m({{1,0,0,0},
+                  {1,0,0,0},
+                  {0,0,1,0},
+                  {0,0,0,1}});
+
+        REQUIRE(determinant(m) == 0.0);
+    }
+    SECTION("simple matrix det") {
+        matrix m({{-2,2,-3},
+                  {-1,1,3},
+                  {2,0,-1}});
+
+        REQUIRE(determinant(m) == 18.0);
+    }
 }
