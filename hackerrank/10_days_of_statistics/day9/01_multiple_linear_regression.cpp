@@ -267,10 +267,9 @@ TEST_CASE("Matrix adjoint", "[adjoint]") {
 TEST_CASE("Matrix determinant", "[determinant]") {
     SECTION( "1x1 matrix" ) {
         matrix m({{5}});
-
         REQUIRE(determinant(m) == 5.0);
     }
-    SECTION( "2x2 matrix" ) {
+    SECTION("2x2 matrix") {
         matrix m({{1,2}, {3,4}});
 
         REQUIRE(determinant(m) == -2.0);
