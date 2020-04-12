@@ -106,6 +106,19 @@ double determinant(const matrix& X) {
     return det;
 }
 
+matrix get_adjoint(const matrix& X) {
+    int n = X.size();
+    matrix result = get_matrix(n, n);
+    int sign = 1;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            matrix m = get_minor(X, i, j);
+            sign = ((i + j) % 2 ==0) ? 1 : -1;
+            result[j][i] = sign * determinant(m);
+        }
+    }
+    return result;
+}
 matrix inverse(const matrix& X) {
     matrix result = get_matrix(1,1);
 
@@ -225,6 +238,19 @@ TEST_CASE("Matrix minor", "[minor]") {
     REQUIRE(res == req);
 }
 
+TEST_CASE("Matrix adjoint", "[adjoint]") {
+    matrix A = {{   5,  -2,  2,  7},
+                {   1,   0,  0,  3},
+                {  -3,   1,  5,  0},
+                {   3,  -1, -9,  4}};
+    matrix res = get_adjoint(A);
+    matrix req = {{-12,76,-60,-36},
+                  {-56,208,-82,-58},
+                  {4,4,-2,-10},
+                  {4,4,20,12}};
+    REQUIRE(res == req);
+}
+
 TEST_CASE("Matrix determinant", "[determinant]") {
     SECTION( "1x1 matrix" ) {
         matrix m({{5}});
@@ -239,9 +265,6 @@ TEST_CASE("Matrix determinant", "[determinant]") {
     
     SECTION("Ones") {
         matrix m = get_eye(4);
-                  {0,1,0,0},
-                  {0,0,1,0},
-                  {0,0,0,1}});
 
         REQUIRE(determinant(m) == 1.0);
     }
