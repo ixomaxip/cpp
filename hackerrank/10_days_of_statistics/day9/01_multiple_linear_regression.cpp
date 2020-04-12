@@ -25,6 +25,14 @@ matrix get_matrix(int n, int m) {
 }
 
 
+matrix get_eye(int n) {
+    matrix result = get_matrix(n, n);
+    for (int i = 0; i < n; i++) {
+        result[i][i] = 1.0;
+    }
+    return result;
+}
+
 void prt_matrix(const matrix& M) {
     for (const auto& row : M) {
         for (const auto& col : row) {
@@ -201,6 +209,10 @@ TEST_CASE("Matrix multiply", "[multiply]") {
     REQUIRE(multiply({{1,4,6}}, {{2,3}, {5,8}, {7,9}}) == matrix({{64,89}}));
 }
 
+TEST_CASE("Matrix ones", "[ones]") {
+    REQUIRE(get_eye(3) == matrix({{1,0,0}, {0,1,0}, {0,0,1}}));
+}
+
 TEST_CASE("Matrix minor", "[minor]") {
     matrix A = {{1,2,3,4},
                 {4,5,6,7},
@@ -226,7 +238,7 @@ TEST_CASE("Matrix determinant", "[determinant]") {
     }
     
     SECTION("Ones") {
-        matrix m({{1,0,0,0},
+        matrix m = get_eye(4);
                   {0,1,0,0},
                   {0,0,1,0},
                   {0,0,0,1}});
