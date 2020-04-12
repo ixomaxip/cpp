@@ -138,7 +138,7 @@ matrix inverse(const matrix& X) {
     return result;
 }
 
-tuple<matrix, matrix, matrix> read(istream& is) {
+tuple<matrix, matrix, matrix> read_data(istream& is) {
     int m, n;
     is >> m >> n;
     matrix X = get_matrix(n, m+1);
@@ -163,9 +163,9 @@ tuple<matrix, matrix, matrix> read(istream& is) {
 
     int q;
     is >> q;
-    matrix test_X = get_matrix(q,  m + 1);
+    matrix _X = get_matrix(q,  m + 1);
     bool is_first = true;
-    for (auto& row : test_X) {
+    for (auto& row : _X) {
         for (auto& col : row) {
             if (is_first) {
                 is_first = false;
@@ -178,20 +178,26 @@ tuple<matrix, matrix, matrix> read(istream& is) {
         is_first = true;
     }
 
-    return make_tuple(X, Y, test_X);    
+    return make_tuple(X, Y, _X);    
+}
+
+matrix calc(const matrix& X, const matrix& Y, const matrix& _X) {
+    matrix XT = transpose(X);
+    matrix XTX = multiply(XT, X);
+    matrix XTXinv = inverse(XTX);
+    matrix XTXinv_XT = multiply(XTXinv, XT);
+    matrix B = multiply(XTXinv_XT, Y);
+    matrix _Y = multiply(_X, B);
+
+    return _Y;
 }
 
 int _main() {
     ifstream input("test_input");
-    matrix X, Y, test_X;
-    tie(X, Y, test_X) = read(input);
-    
-    matrix XT = transpose(X);
-    // matrix XT_X = multiply(XT, X);
-    matrix XT_X_inv = inverse(multiply(XT, X));
-    matrix B = multiply(multiply(XT_X_inv, XT), Y);
+    matrix X, Y, _X;
+    tie(X, Y, _X) = read_data(input);
 
-    matrix test_Y = multiply(test_X, B);
+    matrix test_Y = calc(X, Y, _X);
 
 
     return 0;
@@ -200,7 +206,7 @@ int _main() {
 TEST_CASE("Read data", "[read]") {
     ifstream input("test_input");
     matrix X, Y, test_X;
-    tie(X, Y, test_X) = read(input);
+    tie(X, Y, test_X) = read_data(input);
     REQUIRE(X == matrix({
                          {1, 0.18, 0.89},
                          {1, 1.00, 0.26},
