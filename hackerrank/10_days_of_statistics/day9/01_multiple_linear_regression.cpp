@@ -309,4 +309,56 @@ TEST_CASE("Matrix inverse", "[inverse]") {
         REQUIRE(multiply(X, X_inv) == get_eye(X.size()));
     }
 }
+
+TEST_CASE("Full computation: Y = X * B", "[full]") {
+    matrix X = {{   1,   5,   7},
+                {   1,   6,   6},
+                {   1,   7,   4},
+                {   1,   8,   5},
+                {   1,   9,   6}};
+    
+    matrix Y = {{10},
+                {20},
+                {60},
+                {40},
+                {50}};
+    
+    matrix _X = {{1, 5, 5}};
+
+    matrix XT = transpose(X);
+    matrix XTX = multiply(XT, X);
+    matrix XTXinv = inverse(XTX);
+    matrix XTXinv_XT = multiply(XTXinv, XT);
+    matrix B = multiply(XTXinv_XT, Y);
+    matrix _Y = multiply(_X, B);
+    SECTION("XT * X") {
+        matrix req = {{   5,  35,  28},
+                      {  35, 255, 193},
+                      {  28, 193, 162}};
+        REQUIRE(XTX == req);
+    }
+    SECTION("(XT * X)^-1") {
+        matrix req = {{  18.8884,   -1.23721,    -1.7907},
+                      { -1.23721,    0.12093,  0.0697674},
+                      {  -1.7907,  0.0697674,   0.232558}};
+        REQUIRE(XTXinv == req);
+    }
+    SECTION("(XT * X)^-1 * XT") {
+        matrix req = {{  0.167442,     0.72093,    3.06512,   0.0372093,   -2.9907},
+                      { -0.144186,  -0.0930233,  -0.111628,   0.0790698,  0.269767},
+                      {  0.186047,   0.0232558,  -0.372093,  -0.0697674,  0.232558}};
+        REQUIRE(XTXinv_XT == req);
+    }
+
+    SECTION("B = (XT * X)^-1 * XT * Y") {
+        matrix req = {{  51.9535},
+                      {  6.65116},
+                      { -11.1628}};
+        REQUIRE(B == req);
+    }
+    SECTION("_Y = _X * B") {
+        matrix req = {{29.39535}};
+        REQUIRE(_Y == req);
+    }
+    
 }
