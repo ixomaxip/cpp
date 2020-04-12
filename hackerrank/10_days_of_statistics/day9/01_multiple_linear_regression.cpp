@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include <algorithm>
 #include <fstream>
 #include <tuple>
@@ -197,8 +198,9 @@ int _main() {
     matrix X, Y, _X;
     tie(X, Y, _X) = read_data(input);
 
-    matrix test_Y = calc(X, Y, _X);
-
+    matrix _Y = calc(X, Y, _X);
+    cout << fixed << setprecision(2);
+    prt_matrix(_Y);
 
     return 0;
 }
@@ -369,10 +371,5 @@ TEST_CASE("Full computation: Y = X * B", "[full]") {
 }
 
 TEST_CASE("Main test", "[main]") {
-    ifstream input("test_input");
-    matrix X, Y, _X;
-    tie(X, Y, _X) = read_data(input);
-
-    matrix _Y = calc(X, Y, _X);
-    prt_matrix(_Y);
+    _main();
 }
