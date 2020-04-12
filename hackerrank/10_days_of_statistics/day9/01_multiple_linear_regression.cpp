@@ -119,8 +119,21 @@ matrix get_adjoint(const matrix& X) {
     }
     return result;
 }
+
 matrix inverse(const matrix& X) {
-    matrix result = get_matrix(1,1);
+    int n = X.size();
+    double det = determinant(X);
+    matrix result = get_matrix(n, n);
+
+    if (det == 0) {
+        return matrix({{0}});
+    }
+    matrix adjoint = get_adjoint(X);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            result[i][j] = adjoint[i][j] / det;
+        }
+    }
 
     return result;
 }
@@ -283,4 +296,18 @@ TEST_CASE("Matrix determinant", "[determinant]") {
 
         REQUIRE(determinant(m) == 18.0);
     }
+}
+
+TEST_CASE("Matrix inverse", "[inverse]") {
+    SECTION("eye") {
+        int N = 5;
+        matrix res = inverse(get_eye(N));
+        REQUIRE(res == get_eye(N));
+    }
+    SECTION("2x2 matrix") {
+        matrix X({{1,2}, {3,4}});
+        matrix X_inv = inverse(X);
+        REQUIRE(multiply(X, X_inv) == get_eye(X.size()));
+    }
+}
 }
