@@ -25,7 +25,6 @@ using namespace std::chrono;
 //     Prime
 
 vector<int> read_numbers() {
-    // n = 2038074743 : 8471ms    
     int N;
     cin >> N;
     vector<int> ns(N);
@@ -36,6 +35,7 @@ vector<int> read_numbers() {
 }
 
 bool is_prime(int n) {
+    // n = 2038074743 : 8471ms    
     if (n <= 1) {
         return false;
     }
