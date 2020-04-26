@@ -18,14 +18,20 @@ using namespace std::chrono;
 //     Prime
 //     Prime
 
+// Sample Input
+    // 1
+    // 2038074743
+// Sample Output
+//     Prime
+
 vector<int> read_numbers() {
+    // n = 2038074743 : 8471ms    
     int N;
     cin >> N;
     vector<int> ns(N);
     for (auto& n : ns) {
         cin >> n;
     }
-
     return ns;
 }
 
@@ -44,7 +50,6 @@ bool is_prime(int n) {
 }
 
 int main() {
-    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
     // vector<int> ns = read_numbers();
     vector<int> ns = {2038074743};
 
