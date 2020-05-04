@@ -29,6 +29,25 @@ using namespace std;
 
 vector<string> split_string(string);
 
+void bin(int n) {
+    if (n > 1) {
+        bin(n>>1);
+    }
+    cout << (n&1);
+}
+
+void solution(int n, int k) {
+    int max_and = 0;
+    for (int A = 1; A <= k; A++) {
+        for (int B = A + 1; B <= n; B++) {
+            if ((A&B) < k)
+                max_and = max(max_and, A&B);
+        }
+    }
+    cout << max_and << endl;    
+}
+
+
 int main()
 {
     int t;
@@ -42,8 +61,8 @@ int main()
         vector<string> nk = split_string(nk_temp);
 
         int n = stoi(nk[0]);
-
         int k = stoi(nk[1]);
+        solution(n, k);
     }
 
     return 0;
