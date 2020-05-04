@@ -47,6 +47,18 @@ int solution(int n, int k) {
     return max_and;
 }
 
+int solution2(int n, int k) {
+    if (k < 2)
+        return 0;
+    if (k == 2)
+        return 1;
+    if (((k - 1) & k) > ((k - 2) & (k - 1))) {
+        return (k - 1) & k;
+    } else {
+        return (k - 2) & (k - 1);
+    }
+}
+
 
 int main()
 {
@@ -62,7 +74,7 @@ int main()
 
         int n = stoi(nk[0]);
         int k = stoi(nk[1]);
-        cout << solution(n, k) << endl;
+        cout << solution2(n, k) << endl;
     }
 
     return 0;
