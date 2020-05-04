@@ -36,7 +36,7 @@ void bin(int n) {
     cout << (n&1);
 }
 
-void solution(int n, int k) {
+int solution(int n, int k) {
     int max_and = 0;
     for (int A = 1; A <= k; A++) {
         for (int B = A + 1; B <= n; B++) {
@@ -44,7 +44,7 @@ void solution(int n, int k) {
                 max_and = max(max_and, A&B);
         }
     }
-    cout << max_and << endl;    
+    return max_and;
 }
 
 
@@ -62,7 +62,7 @@ int main()
 
         int n = stoi(nk[0]);
         int k = stoi(nk[1]);
-        solution(n, k);
+        cout << solution(n, k) << endl;
     }
 
     return 0;
