@@ -7,15 +7,12 @@ void staircase(int n) {
     for (int i = 1; i <= n; i++) {
         cout << string(n - i, ' ') << string(i, '#') << endl;
     }
-
-
 }
 
 int main()
 {
     int n;
-    // cin >> n;
-    n = 6;
+    cin >> n;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     staircase(n);
