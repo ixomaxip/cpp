@@ -10,13 +10,13 @@ using namespace std;
 
 // Complete the stringConstruction function below.
 int stringConstruction(string s) {
-    string p = "";
+    vector<int> chars(26, 0);
     int cost = 0;
     for (auto& c : s) {
-        if (p.find(c) == string::npos) {
+        if (chars[c - 'a'] == 0) {
             cost++;
         }
-        p += c;
+        chars[c - 'a']++;
     }
     return cost;
 }
@@ -24,8 +24,8 @@ int stringConstruction(string s) {
 int main()
 {
     // string s = "abcabc"; // cost = 3
-    // string s = "abab"; // cost = 2
-    string s = "abcd"; // cost = 4
+    string s = "abab"; // cost = 2
+    // string s = "abcd"; // cost = 4
     
 
     int result = stringConstruction(s);
