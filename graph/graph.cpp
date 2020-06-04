@@ -16,6 +16,9 @@ public:
     }
     void add_edge(const string& from, const string& to) {
         this->_adj[from].push_back(to);
+        if (this->_adj.find(to) == this->_adj.end()) {
+            this->add_node(to);
+        }
     }
     vector<string> get_path(const string& from, const string& to ) {
         vector<string> res;
