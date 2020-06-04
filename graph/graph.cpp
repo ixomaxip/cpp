@@ -28,7 +28,7 @@ public:
 
     void print() {
         for (const auto& [u, list] : this->_adj) {
-            if (this->_adj[u].empty())
+            if (list.empty())
                 cout << u << endl;
             for (const auto& v : list) {
                 cout << u << " -> " << v << endl;
