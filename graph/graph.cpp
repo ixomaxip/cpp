@@ -27,12 +27,12 @@ public:
     }
 
     void print() {
-        for (const auto& [key, value] : this->_adj) {
-            cout << key;
-            for (const auto& u : this->_adj[key]) {
-                cout << " -> " << u;
+        for (const auto& [u, list] : this->_adj) {
+            if (this->_adj[u].empty())
+                cout << u << endl;
+            for (const auto& v : list) {
+                cout << u << " -> " << v << endl;
             }
-            cout << endl;
         }
     };
 
