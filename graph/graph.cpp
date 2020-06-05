@@ -107,7 +107,12 @@ TEST_CASE ("Shortest path") {
         g.add_node("B");
         req = {};
         REQUIRE(g.get_path("A", "B") == req);
-
+        g.add_edge("A", "B");
+        g.add_edge("A", "C");
+        g.add_edge("D", "C");
+        g.add_edge("D", "A");
+        REQUIRE(g.get_path("A", "D") == req);
+        
     };
     SECTION ("one node with the simplest cyrcle") {
         Graph g;
