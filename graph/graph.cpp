@@ -30,7 +30,7 @@ public:
         map<string, string> predecessor;
         map<string, int> distance;
         map<string, bool> visited;
-        // fill initials
+        // initialize the values
         for (const auto& [u, _] : this->_adj) {
             predecessor[u] = "";
             distance[u] = INT_MAX;
@@ -60,7 +60,7 @@ public:
             }
         }
 
-        //constructing path
+        //construct path
         vector<string> path;
         if (!found) {
             return path;
