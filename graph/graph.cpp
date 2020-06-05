@@ -7,8 +7,9 @@
 
 using namespace std;
 
-
-
+//tests
+#define CATCH_CONFIG_MAIN
+#include "catch2/catch.hpp"
 
 class Graph {
 public:
@@ -22,7 +23,7 @@ public:
             this->add_node(to);
         }
     }
-    
+
     vector<string> get_path(const string& from, const string& to ) {
         
         queue<string> Q;
@@ -98,23 +99,78 @@ private:
 };
 
 
-int main() {
+TEST_CASE ("Shortest path") {
+    vector<string> req;
+    SECTION ("empty path") {
+        Graph g;
+        g.add_node("A");
+        g.add_node("B");
+        req = {};
+        REQUIRE(g.get_path("A", "B") == req);
 
-    Graph g;
-    g.add_node("A");
-    g.add_node("B");
-    g.add_node("C");
-    g.add_node("D");
+    };
+    SECTION ("one node with the simplest cyrcle") {
+        Graph g;
+        g.add_node("A");
+        g.add_edge("A", "A");
+        req = {"A"};
+        REQUIRE(g.get_path("A", "A") == req);
+    };
+    SECTION ("list") {
+        Graph g;
+        g.add_edge("A", "B");
+        g.add_edge("B", "C");
+        g.add_edge("C", "D");
 
-    g.add_edge("A", "B");
-    g.add_edge("A", "C");
-    g.add_edge("D", "A");
-    g.add_edge("E", "C");
+        req = {"A", "B", "C"};
+        REQUIRE(g.get_path("A", "C") == req);
+    };
+    SECTION ("first with last") {
+        Graph g;        
+        g.add_edge("A", "B");
+        g.add_edge("A", "D");
+        g.add_edge("B", "C");
+        g.add_edge("C", "D");
+
+        req = {"A", "D"};
+        REQUIRE(g.get_path("A", "D") == req);
+        req = {"A", "B", "C"};
+        REQUIRE(g.get_path("A", "C") == req);
+    };
+    SECTION ("cyrcles") {
+        Graph g;
+        g.add_edge("A", "B");
+        g.add_edge("B", "C");
+        g.add_edge("C", "D");
+        g.add_edge("D", "E");
+        g.add_edge("E", "A");
+
+        req = {"A", "B", "C", "D", "E"};
+        REQUIRE(g.get_path("A", "E") == req);
+
+        g.add_edge("D", "A");
+        REQUIRE(g.get_path("A", "E") == req);
+
+        g.add_edge("A", "D");
+        req = {"A", "D", "E"};
+        REQUIRE(g.get_path("A", "E") == req);
+    };
 
 
-    g.print();
+};
 
-    return 0;
-}
+// int main() {
+
+//     Graph g;
+//     g.add_edge("A", "B");
+//     g.add_edge("A", "C");
+//     g.add_edge("D", "A");
+//     g.add_edge("E", "F");
+
+
+//     g.print();
+
+//     return 0;
+// }
 
 
