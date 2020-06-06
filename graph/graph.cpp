@@ -13,90 +13,100 @@ using namespace std;
 
 class Graph {
 public:
-    void add_node(const string& node_name){
-        this->_adj[node_name] = {};
+    void add_node(const string& node_name);
+    void add_edge(const string& from, const string& to);
+    vector<string> get_path(const string& from, const string& to );
+    vector<vector<string>> get_cycles() const;
+    
+    void print();
+
+
+protected:
+    map<string, vector<string>> _adj;
+};
+
+
+void Graph::add_node(const string& node_name){
+    this->_adj[node_name] = {};
+}
+
+void Graph::add_edge(const string& from, const string& to) {
+    this->_adj[from].push_back(to);
+    if (this->_adj.find(to) == this->_adj.end()) {
+        this->add_node(to);
+    }
+}
+
+vector<string> Graph::get_path(const string& from, const string& to ) {
+    
+    queue<string> Q;
+    map<string, string> predecessor;
+    map<string, int> distance;
+    map<string, bool> visited;
+    // initialize the values
+    for (const auto& [u, _] : this->_adj) {
+        predecessor[u] = "";
+        distance[u] = INT_MAX;
+        visited[u] = false;
     }
 
-    void add_edge(const string& from, const string& to) {
-        this->_adj[from].push_back(to);
-        if (this->_adj.find(to) == this->_adj.end()) {
-            this->add_node(to);
-        }
-    }
-
-    vector<string> get_path(const string& from, const string& to ) {
-        
-        queue<string> Q;
-        map<string, string> predecessor;
-        map<string, int> distance;
-        map<string, bool> visited;
-        // initialize the values
-        for (const auto& [u, _] : this->_adj) {
-            predecessor[u] = "";
-            distance[u] = INT_MAX;
-            visited[u] = false;
-        }
-
-        visited[from] = true;
-        distance[from] = 0;
-        Q.push(from);
-        
-        //breadth-first search
-        bool found = false;
-        while (!Q.empty()) {
-            string u = Q.front();
-            Q.pop();
-            for (const auto& v : this->_adj[u]) {
-                if (visited[v] == false) {
-                    visited[v] = true;
-                    distance[v] = distance[u] + 1;
-                    predecessor[v] = u;
-                    Q.push(v);
-                }
-                if (v == to) {
-                    found = true;
-                    break;
-                }
+    visited[from] = true;
+    distance[from] = 0;
+    Q.push(from);
+    
+    //breadth-first search
+    bool found = false;
+    while (!Q.empty()) {
+        string u = Q.front();
+        Q.pop();
+        for (const auto& v : this->_adj[u]) {
+            if (visited[v] == false) {
+                visited[v] = true;
+                distance[v] = distance[u] + 1;
+                predecessor[v] = u;
+                Q.push(v);
+            }
+            if (v == to) {
+                found = true;
+                break;
             }
         }
+    }
 
-        //construct path
-        vector<string> path;
-        if (!found) {
-            return path;
-        }
-        
-        string curr_node = to;
-        path.push_back(curr_node);
-        while (predecessor[curr_node] != "") {
-            path.push_back(predecessor[curr_node]);
-            curr_node = predecessor[curr_node];
-        }
-
-        reverse(path.begin(), path.end());
-
-        cout << "path: " << distance[to] << endl;
-
+    //construct path
+    vector<string> path;
+    if (!found) {
         return path;
     }
-    vector<vector<string>> get_cycles() const {
-        vector<vector<string>> res;
-        return res;
+    
+    string curr_node = to;
+    path.push_back(curr_node);
+    while (predecessor[curr_node] != "") {
+        path.push_back(predecessor[curr_node]);
+        curr_node = predecessor[curr_node];
     }
 
-    void print() {
-        for (const auto& [u, list] : this->_adj) {
-            if (list.empty())
-                cout << u << endl;
-            for (const auto& v : list) {
-                cout << u << " -> " << v << endl;
-            }
+    reverse(path.begin(), path.end());
+
+    // cout << "path: " << distance[to] << endl;
+
+    return path;
+}
+    }
+
+void Graph::print() {
+    for (const auto& [u, list] : this->_adj) {
+        if (list.empty())
+            cout << u << endl;
+        for (const auto& v : list) {
+            cout << u << " -> " << v << endl;
+        }
+    }
+};
+
         }
     };
 
-private:
-    map<string, vector<string>> _adj;
-};
 
 
 TEST_CASE ("Shortest path") {
