@@ -90,11 +90,13 @@ vector<vector<string>> Graph::get_cycles() const {
                 string next = list.back();
                 list.pop_back();
                 if (next == start) {
+                    // yeah! i've got a cycle
                     cycles.push_back(path);
                     for (const auto& p : path) {
                         closed[p] = true;
                     }
                 } else if (!blocked[next]) {
+                    // first visit
                     path.push_back(next);
                     stack.push_back(next);
                     closed[next] = false;
@@ -103,6 +105,7 @@ vector<vector<string>> Graph::get_cycles() const {
                 }
             }
             if (list.empty()) {
+                // backtrack
                 if (closed[curr_node]) {
                     _unblock(curr_node, blocked, B);
                 } else {
@@ -335,27 +338,29 @@ TEST_CASE ("misc") {
     cout << endl;
 
     SECTION ("subgraph"){
-        cout << "Subgraph" << endl;
+        // cout << "Subgraph" << endl;
         Graph sg = g.subgraph({"B", "D", "A"});
-        sg.print();
-        cout << endl;
+        // sg.print();
+        // cout << endl;
     }
     SECTION ("remove node"){
-        cout << "Remove" << endl;
+        // cout << "Remove" << endl;
         g.remove_node("A");
-        g.print();
-        cout << endl;
+        // g.print();
+        // cout << endl;
     }
     SECTION ("strongly connected components"){
         vector<vector<string>> cs = g.get_sccs();
-        int cnt = 0;
-        for (auto& c : cs) {
-            cout << cnt++ << ":";
-            for (auto& v : c) {
-                cout << " " << v;
-            }
-            cout << endl;
-        }
+        // int cnt = 0;
+        // for (auto& c : cs) {
+        //     cout << cnt++ << ":";
+        //     for (auto& v : c) {
+        //         cout << " " << v;
+        //     }
+        //     cout << endl;
+        // }
+        vector<vector<string>> req = {{"C", "B", "D", "A"}, {"E"}};
+        REQUIRE (g.get_sccs() == req);
     }
 }
 TEST_CASE ("Shortest path") {
