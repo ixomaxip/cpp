@@ -56,27 +56,32 @@ vector<vector<string>> Graph::get_cycles() const {
             }
         }
     };
-
     
     Graph g = *this;
     auto sccs = g.get_sccs();
+    // main loop by strongly connected components
+    while (!sccs.empty()) {
+        auto scc = sccs.back();
+        sccs.pop_back();
 
-    for (auto& scc :sccs)
-    {
         map<string, bool> blocked; // blocked from search
         map<string, bool> closed; // already in a cycle
         map<string, set<string>> B;  // graph without elementary cycles
+        // defaults
         for (const auto& u : scc) {
             blocked[u] = false;
             closed[u] = false;
             B[u] = {};
         }
+        // getting start vertex
         string start = scc.back();
         scc.pop_back();
+        blocked[start] = true;
         vector<string> stack;
         stack.push_back(start);
-
         vector<string> path;
+        path.push_back(start);
+
         while (!stack.empty()) {            
             string curr_node = stack.back();
             stack.pop_back();
