@@ -4,6 +4,10 @@
 #include <string>
 #include <queue>
 #include <algorithm>
+#include <stack>
+#include <set>
+#include <functional>
+
 
 using namespace std;
 
@@ -20,11 +24,33 @@ public:
     
     void print();
     void remove_node(const string& node);
+    Graph subgraph(vector<string> nodes) const;
 
+    vector<string> get_nodes() const;
 
 protected:
     map<string, vector<string>> _adj;
 };
+
+Graph Graph::subgraph(vector<string> nodes) const {
+    Graph sub_g = *this;
+    for (const auto& u : sub_g.get_nodes()) {
+        if (find(nodes.begin(), nodes.end(), u) == nodes.end()) {
+            sub_g.remove_node(u);
+        }
+    }
+
+    return sub_g;
+}
+
+vector<string> Graph::get_nodes() const {
+    vector<string> nodes;
+    for (const auto& [u, _] : this->_adj) {
+        nodes.push_back(u);
+    }
+    return nodes;
+}
+
 
 void Graph::remove_node(const string& node) {
     this->_adj.erase(this->_adj.find(node));
@@ -119,16 +145,28 @@ void Graph::print() {
 
 
 
-TEST_CASE ("remove_node") {
+TEST_CASE ("misc") {
+
     Graph g;
     g.add_edge("A", "D");
     g.add_edge("B", "A");
-    g.add_edge("C", "A");
-    g.add_edge("D", "A");
-    g.add_edge("C", "D");
-    g.add_edge("D", "B");
-    g.remove_node("A");
+    g.add_edge("C", "A"); g.add_edge("C", "D");
+    g.add_edge("D", "A"); g.add_edge("D", "B");
     g.print();
+    cout << endl;
+
+    SECTION ("subgraph"){
+        cout << "Subgraph" << endl;
+        Graph sg = g.subgraph({"B", "D", "A"});
+        sg.print();
+        cout << endl;
+    }
+    SECTION ("remove node"){
+        cout << "Remove" << endl;
+        g.remove_node("A");
+        g.print();
+        cout << endl;
+    }
 
     // REQUIRE((g == g.get_transposed().get_transposed()) == true);
 }
