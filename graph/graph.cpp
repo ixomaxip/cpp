@@ -36,6 +36,90 @@ protected:
 };
 
 
+
+vector<vector<string>> Graph::get_cycles() const {
+    vector<vector<string>> cycles;
+
+    auto _unblock = []
+    (const string curr_node, map<string, bool>& blocked, map<string, set<string>>& B) -> void {
+        vector<string> stack;
+        stack.push_back(curr_node);
+        while (!stack.empty()) {
+            string node = stack.back();
+            stack.pop_back();
+            if (blocked[node]) {
+                blocked[node] = false;
+                for (auto& u : B[node]) {
+                    stack.push_back(u);
+                }
+                B[node] = {};
+            }
+        }
+    };
+
+    
+    Graph g = *this;
+    auto sccs = g.get_sccs();
+
+    for (auto& scc :sccs)
+    {
+        map<string, bool> blocked; // blocked from search
+        map<string, bool> closed; // already in a cycle
+        map<string, set<string>> B;  // graph without elementary cycles
+        for (const auto& u : scc) {
+            blocked[u] = false;
+            closed[u] = false;
+            B[u] = {};
+        }
+        string start = scc.back();
+        scc.pop_back();
+        vector<string> stack;
+        stack.push_back(start);
+
+        vector<string> path;
+        while (!stack.empty()) {            
+            string curr_node = stack.back();
+            stack.pop_back();
+            vector<string> list = g.get_neighbours(curr_node);
+            if (!list.empty()) {
+                string next = list.back();
+                list.pop_back();
+                if (next == start) {
+                    cycles.push_back(path);
+                    for (const auto& p : path) {
+                        closed[p] = true;
+                    }
+                } else if (!blocked[next]) {
+                    path.push_back(next);
+                    stack.push_back(next);
+                    closed[next] = false;
+                    blocked[next] = true;
+                    continue;
+                }
+            }
+            if (list.empty()) {
+                if (closed[curr_node]) {
+                    _unblock(curr_node, blocked, B);
+                } else {
+                    auto curr_neibs = g.get_neighbours(curr_node);
+                    for (const auto& n : curr_neibs) {
+                        if (B[n].find(curr_node) == B[n].end()) {
+                            B[n].insert(curr_node);
+                        }
+                    }
+                }
+            }
+        }
+        g.remove_node(start);
+        auto sub_g = g.subgraph(scc);
+        auto sub_sccs = sub_g.get_sccs();
+        for (auto& c : sub_sccs) {
+            sccs.push_back(c);
+        }
+    }
+    return cycles;
+}
+
 vector<vector<string>> Graph::get_sccs() {
     // find strongly connected components
     // Tarjan's algorithm O(V + E)
