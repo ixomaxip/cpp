@@ -19,12 +19,22 @@ public:
     vector<vector<string>> get_cycles() const;
     
     void print();
+    void remove_node(const string& node);
 
 
 protected:
     map<string, vector<string>> _adj;
 };
 
+void Graph::remove_node(const string& node) {
+    this->_adj.erase(this->_adj.find(node));
+
+    for (auto& [u, list] : this->_adj) {
+        list.erase(remove(list.begin(), list.end(), node), list.end());
+    }
+
+
+}
 
 void Graph::add_node(const string& node_name){
     this->_adj[node_name] = {};
@@ -109,6 +119,19 @@ void Graph::print() {
 
 
 
+TEST_CASE ("remove_node") {
+    Graph g;
+    g.add_edge("A", "D");
+    g.add_edge("B", "A");
+    g.add_edge("C", "A");
+    g.add_edge("D", "A");
+    g.add_edge("C", "D");
+    g.add_edge("D", "B");
+    g.remove_node("A");
+    g.print();
+
+    // REQUIRE((g == g.get_transposed().get_transposed()) == true);
+}
 TEST_CASE ("Shortest path") {
     vector<string> req;
     SECTION ("empty path") {
