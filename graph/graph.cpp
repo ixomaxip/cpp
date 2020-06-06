@@ -22,14 +22,15 @@ public:
     vector<string> get_path(const string& from, const string& to );
     vector<vector<string>> get_cycles() const;
     
-    void print();
-    
+    vector<vector<string>> get_sccs() const;
+
     void remove_node(const string& node);
     Graph subgraph(vector<string> nodes) const;
-    vector<vector<string>> get_sccs();
 
     vector<string> get_nodes() const;
+    vector<string> get_neighbours(const string& u) const;
 
+    void print();
 protected:
     map<string, vector<string>> _adj;
 };
@@ -112,6 +113,13 @@ vector<string> Graph::get_nodes() const {
     return nodes;
 }
 
+vector<string> Graph::get_neighbours(const string& u) {
+    if (this->_adj.find(u) == this->_adj.end()) {
+        return vector<string>;
+    } else {
+        return this->_adj[u];
+    }
+}
 
 void Graph::remove_node(const string& node) {
     this->_adj.erase(this->_adj.find(node));
