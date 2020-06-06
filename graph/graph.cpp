@@ -22,13 +22,13 @@ public:
     vector<string> get_path(const string& from, const string& to );
     vector<vector<string>> get_cycles() const;
     
-    vector<vector<string>> get_sccs() const;
+    vector<vector<string>> get_sccs();
 
     void remove_node(const string& node);
     Graph subgraph(vector<string> nodes) const;
 
-    vector<string> get_nodes() const;
-    vector<string> get_neighbours(const string& u) const;
+    vector<string> get_nodes();
+    vector<string> get_neighbours(const string& u);
 
     void print();
 protected:
@@ -105,7 +105,7 @@ Graph Graph::subgraph(vector<string> nodes) const {
     return sub_g;
 }
 
-vector<string> Graph::get_nodes() const {
+vector<string> Graph::get_nodes() {
     vector<string> nodes;
     for (const auto& [u, _] : this->_adj) {
         nodes.push_back(u);
@@ -115,7 +115,7 @@ vector<string> Graph::get_nodes() const {
 
 vector<string> Graph::get_neighbours(const string& u) {
     if (this->_adj.find(u) == this->_adj.end()) {
-        return vector<string>;
+        return vector<string>();
     } else {
         return this->_adj[u];
     }
@@ -216,7 +216,7 @@ TEST_CASE ("misc") {
     g.add_edge("D", "A"); g.add_edge("D", "B");
     g.add_edge("E", "E");
 
-    g.print();
+    // g.print();
     cout << endl;
 
     SECTION ("subgraph"){
