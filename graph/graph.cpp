@@ -128,7 +128,6 @@ vector<string> Graph::get_path(const string& from, const string& to ) {
 
     return path;
 }
-    }
 
 void Graph::print() {
     for (const auto& [u, list] : this->_adj) {
@@ -139,10 +138,6 @@ void Graph::print() {
         }
     }
 };
-
-        }
-    };
-
 
 
 TEST_CASE ("misc") {
