@@ -58,8 +58,6 @@ void Graph::remove_node(const string& node) {
     for (auto& [u, list] : this->_adj) {
         list.erase(remove(list.begin(), list.end(), node), list.end());
     }
-
-
 }
 
 void Graph::add_node(const string& node_name){
