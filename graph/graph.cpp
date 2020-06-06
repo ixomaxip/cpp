@@ -295,7 +295,33 @@ void Graph::print() {
     }
 };
 
+TEST_CASE ("cycles") {
+    Graph one_vertex;
+    Graph linked_list;
+    Graph linked_list_with_loop;
+    Graph circle;
+    Graph g4;
+    Graph g5;
+    SECTION ("linked_list_with_loop") {
+        Graph g;
+        g.add_edge("A", "B");
+        g.add_edge("B", "C");
+        g.add_edge("C", "D");
+        g.add_edge("D", "E");
+        g.add_edge("E", "C");
+        // g.add_edge("A", "B");
+        vector<vector<string>> cs = g.get_cycles();
+        cout << cs.size() << endl;
+        
+        for (auto& c: cs) {
+            for (auto& v : c) {
+                cout << " " << v;
+            }
+            cout << endl;
+        }
 
+    }
+}
 TEST_CASE ("misc") {
 
     Graph g;
