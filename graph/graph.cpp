@@ -23,14 +23,75 @@ public:
     vector<vector<string>> get_cycles() const;
     
     void print();
+    
     void remove_node(const string& node);
     Graph subgraph(vector<string> nodes) const;
+    vector<vector<string>> get_sccs();
 
     vector<string> get_nodes() const;
 
 protected:
     map<string, vector<string>> _adj;
 };
+
+
+vector<vector<string>> Graph::get_sccs() {
+    // find strongly connected components
+    // Tarjan's algorithm O(V + E)
+
+    vector<vector<string>> components;
+    map<string, int> idx;
+    map<string, int> low;
+    int counter = 0;
+    stack<string> st;
+    map<string, bool> in_stack;
+
+    for (const auto& u : this->get_nodes()) {
+        in_stack[u] = false;
+        idx[u] = -1;
+        low[u] = -1;
+    }
+
+
+    function<void(const string& node)> _sccs;
+    _sccs = [&] (const string& node) -> void {
+        idx[node] = low[node] = counter;
+        counter++;
+        st.push(node);
+        in_stack[node] = true;
+
+        for (const auto& v : this->_adj[node]) {
+            if (idx[v] == -1) {
+               _sccs(v);
+               low[node] = min(low[node], low[v]);
+            }
+            else if (in_stack[v]) {
+                low[node] = min(low[node], idx[v]);
+            }
+        }
+
+        if (low[node] == idx[node]) {
+            vector<string> component;
+            while (true) {
+                auto w = st.top();
+                st.pop();
+                component.push_back(w);
+                in_stack[w] = false;
+                if (w == node)
+                    break;
+            }
+            components.push_back(component);
+        }
+    };
+
+    for (const auto node : this->get_nodes()) {
+        if (idx[node] == -1) {
+            _sccs(node);
+        }
+    }
+
+    return components;
+}
 
 Graph Graph::subgraph(vector<string> nodes) const {
     Graph sub_g = *this;
@@ -142,9 +203,11 @@ TEST_CASE ("misc") {
 
     Graph g;
     g.add_edge("A", "D");
-    g.add_edge("B", "A");
+    g.add_edge("B", "A"); g.add_edge("B", "C");
     g.add_edge("C", "A"); g.add_edge("C", "D");
     g.add_edge("D", "A"); g.add_edge("D", "B");
+    g.add_edge("E", "E");
+
     g.print();
     cout << endl;
 
@@ -160,8 +223,17 @@ TEST_CASE ("misc") {
         g.print();
         cout << endl;
     }
-
-    // REQUIRE((g == g.get_transposed().get_transposed()) == true);
+    SECTION ("strongly connected components"){
+        vector<vector<string>> cs = g.get_sccs();
+        int cnt = 0;
+        for (auto& c : cs) {
+            cout << cnt++ << ":";
+            for (auto& v : c) {
+                cout << " " << v;
+            }
+            cout << endl;
+        }
+    }
 }
 TEST_CASE ("Shortest path") {
     vector<string> req;
