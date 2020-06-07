@@ -75,7 +75,6 @@ vector<vector<string>> Graph::get_cycles() const {
         }
         // getting start vertex
         string start = scc.back();
-        cout << start << endl;
         scc.pop_back();
         blocked[start] = true;
         vector<pair<string, vector<string>>> stack;
@@ -190,7 +189,6 @@ vector<vector<string>> Graph::get_sccs() {
             _sccs(node);
         }
     }
-
     return components;
 }
 
@@ -218,8 +216,6 @@ vector<string> Graph::get_neighbours(const string& u) {
     if (this->_adj.find(u) != this->_adj.end()) {
         for (auto& v : this->_adj[u])
         nbs.push_back(v);
-        // sort(nbs.begin(), nbs.end());
-        // reverse(nbs.begin(), nbs.end());
     }
     return nbs;
 }
@@ -294,8 +290,6 @@ vector<string> Graph::get_path(const string& from, const string& to ) {
 
     reverse(path.begin(), path.end());
 
-    // cout << "path: " << distance[to] << endl;
-
     return path;
 }
 
@@ -308,8 +302,6 @@ void Graph::print() {
         }
         cout << u << ": [";
         first = true;
-        // if (list.empty())
-            // cout << u << ": [";
         for (const auto& v : list) {
             if (!first)
                 cout << ", ";
@@ -407,7 +399,7 @@ TEST_CASE ("cycles") {
         g.add_edge("2", "0"); g.add_edge("2", "1"); g.add_edge("2", "3");
         g.add_edge("3", "0"); g.add_edge("3", "1"); g.add_edge("3", "2");
         auto result = g.get_cycles();
-        vector<vector<string>> req ={
+        vector<vector<string>> req = {
             {"0", "3", "2", "1"}, 
             {"0", "3", "2"},
             {"0", "3", "1", "2"},
