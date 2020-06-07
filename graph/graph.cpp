@@ -378,7 +378,6 @@ TEST_CASE ("cycles") {
         REQUIRE(compare(g.get_cycles(), {{"C", "D", "E"}}));
     }
     SECTION ("circle") {
-        cout << "circle" << endl;
         Graph g;
         g.add_edge("A", "B");
         g.add_edge("B", "C");
