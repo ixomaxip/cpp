@@ -85,7 +85,7 @@ vector<vector<string>> Graph::get_cycles() const {
         while (!stack.empty()) {            
             string curr_node = stack.back();
             stack.pop_back();
-            vector<string> list = g.get_neighbours(curr_node);
+            auto list = g.get_neighbours(curr_node);
             if (!list.empty()) {
                 string next = list.back();
                 list.pop_back();
@@ -136,7 +136,7 @@ vector<vector<string>> Graph::get_sccs() {
     map<string, int> idx;
     map<string, int> low;
     int counter = 0;
-    stack<string> st;
+    vector<string> stack;
     map<string, bool> in_stack;
 
     for (const auto& u : this->get_nodes()) {
@@ -148,12 +148,18 @@ vector<vector<string>> Graph::get_sccs() {
 
     function<void(const string& node)> _sccs;
     _sccs = [&] (const string& node) -> void {
+        // cout << node << endl;
         idx[node] = low[node] = counter;
         counter++;
-        st.push(node);
+        stack.push_back(node);
         in_stack[node] = true;
 
-        for (const auto& v : this->_adj[node]) {
+        auto nbs = this->get_neighbours(node);
+        // for (auto& n : nbs) {
+        //     cout << " " << n;
+        // }
+        // cout <<endl;
+        for (const auto& v : nbs) {
             if (idx[v] == -1) {
                _sccs(v);
                low[node] = min(low[node], low[v]);
@@ -166,10 +172,10 @@ vector<vector<string>> Graph::get_sccs() {
         if (low[node] == idx[node]) {
             vector<string> component;
             while (true) {
-                auto w = st.top();
-                st.pop();
-                component.push_back(w);
+                auto w = stack.back();
+                stack.pop_back();
                 in_stack[w] = false;
+                component.push_back(w);
                 if (w == node)
                     break;
             }
