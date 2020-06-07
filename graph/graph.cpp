@@ -356,6 +356,38 @@ bool compare(vector<vector<string>> v1, vector<vector<string>> v2, bool do_sort 
 
     return true;
 }
+
+TEST_CASE ("cycles") {
+    SECTION ("one vertex (& self loop vertices)") {
+        Graph g;
+        g.add_node("A");
+        REQUIRE(compare(g.get_cycles(), {}));
+        g.add_edge("A", "A");
+        REQUIRE(compare(g.get_cycles(), {{"A"}}));
+        g.add_edge("B", "B");
+        REQUIRE(compare(g.get_cycles(), {{"B"}, {"A"}}));
+    }
+    SECTION ("linked list (&with a loop at the end)") {
+        Graph g;
+        g.add_edge("A", "B");
+        g.add_edge("B", "C");
+        g.add_edge("C", "D");
+        g.add_edge("D", "E");
+        REQUIRE(compare(g.get_cycles(), {}));
+        g.add_edge("E", "C");
+        REQUIRE(compare(g.get_cycles(), {{"C", "D", "E"}}));
+    }
+    SECTION ("circle") {
+        cout << "circle" << endl;
+        Graph g;
+        g.add_edge("A", "B");
+        g.add_edge("B", "C");
+        g.add_edge("C", "D");
+        g.add_edge("D", "A");
+        REQUIRE(compare(g.get_cycles(), {{"A", "B", "C", "D"}}));
+    }
+}
+
 TEST_CASE ("Shortest path") {
     vector<string> req;
     SECTION ("empty path") {
