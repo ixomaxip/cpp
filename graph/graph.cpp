@@ -423,39 +423,35 @@ TEST_CASE ("cycles") {
         };
         REQUIRE(compare(result, req));
     }
-    // SECTION ("A worst example for Tarjan's algorithm (from article)") {
-    //     cout << "A worst example for Tarjan's algorithm" << endl;
-    //     Graph g;
-    //     g.add_edge("1", "2"); g.add_edge("1", "3"); g.add_edge("1", "4");
-    //     g.add_edge("2", "5");
-    //     g.add_edge("3", "5");
-    //     g.add_edge("4", "5");
-    //     g.add_edge("5", "6"); g.add_edge("5", "8");
-    //     g.add_edge("6", "7"); g.add_edge("6", "8");
-    //     g.add_edge("7", "1"); g.add_edge("7", "8");
-    //     g.add_edge("8", "9"); g.add_edge("8", "10"); g.add_edge("8", "11");
-    //     g.add_edge("9", "5"); g.add_edge("9", "12");
-    //     g.add_edge("10", "12");
-    //     g.add_edge("11", "12");
-    //     g.add_edge("12", "8");
+    SECTION ("A worst-case example for Tarjan's algorithm (from article)") {
+        Graph g;
+        g.add_edge("1", "2"); g.add_edge("1", "3"); g.add_edge("1", "4");
+        g.add_edge("2", "5");
+        g.add_edge("3", "5");
+        g.add_edge("4", "5");
+        g.add_edge("5", "6"); g.add_edge("5", "8");
+        g.add_edge("6", "7"); g.add_edge("6", "8");
+        g.add_edge("7", "1"); g.add_edge("7", "8");
+        g.add_edge("8", "9"); g.add_edge("8", "10"); g.add_edge("8", "11");
+        g.add_edge("9", "5"); g.add_edge("9", "12");
+        g.add_edge("10", "12");
+        g.add_edge("11", "12");
+        g.add_edge("12", "8");
 
-    //     Graph g4;
-    //     g4.add_edge("0","1");g4.add_edge("0","3");
-    //     g4.add_edge("1","2");g4.add_edge("1","4"); 
-    //     g4.add_edge("2","0");g4.add_edge("2","6"); 
-    //     g4.add_edge("3","2"); 
-    //     g4.add_edge("4","5");g4.add_edge("4","6"); 
-    //     g4.add_edge("5","6");g4.add_edge("5","7");g4.add_edge("5","8");g4.add_edge("5","9"); 
-    //     g4.add_edge("6","4"); 
-    //     g4.add_edge("7","9"); 
-    //     g4.add_edge("8","9"); 
-    //     g4.add_edge("9","8");
-    //     g4.add_node("10");
-    //     auto result = g4.get_sccs();
-    //     print(result);
-    //     REQUIRE(compare(result, {{"8", "9"}, {"7"}, {"5", "4", "6"}, {"3", "2", "1"}, {"10"}}));
-    //     // [[1, 4, 5, 6, 7], [1, 3, 5, 6, 7], [1, 2, 5, 6, 7], [5, 6, 7, 8, 9], [5, 6, 8, 9], [8, 11, 12], [8, 10, 12], [8, 9, 12]]
-    // }
+        auto result = g.get_cycles();
+        vector<vector<string>> req = {
+            {"1", "4", "5", "6", "7"},
+            {"1", "3", "5", "6", "7"},
+            {"1", "2", "5", "6", "7"},
+            {"10", "8", "9"},
+            {"11", "8", "12"},
+            {"12", "8", "9"},
+            {"5", "8", "9"},
+            {"5", "6", "8", "9"},
+            {"5", "6", "7", "8", "9"},
+        };
+        REQUIRE(compare(result, req));
+    }
 }
 
 TEST_CASE ("Shortest path") {
