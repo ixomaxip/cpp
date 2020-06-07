@@ -373,33 +373,33 @@ bool compare(vector<vector<string>> v1, vector<vector<string>> v2, bool do_sort 
 }
 
 TEST_CASE ("cycles") {
-    // SECTION ("one vertex (& self loop vertices)") {
-    //     Graph g;
-    //     g.add_node("A");
-    //     REQUIRE(compare(g.get_cycles(), {}));
-    //     g.add_edge("A", "A");
-    //     REQUIRE(compare(g.get_cycles(), {{"A"}}));
-    //     g.add_edge("B", "B");
-    //     REQUIRE(compare(g.get_cycles(), {{"B"}, {"A"}}));
-    // }
-    // SECTION ("linked list (&with a loop at the end)") {
-    //     Graph g;
-    //     g.add_edge("A", "B");
-    //     g.add_edge("B", "C");
-    //     g.add_edge("C", "D");
-    //     g.add_edge("D", "E");
-    //     REQUIRE(compare(g.get_cycles(), {}));
-    //     g.add_edge("E", "C");
-    //     REQUIRE(compare(g.get_cycles(), {{"C", "D", "E"}}));
-    // }
-    // SECTION ("circle") {
-    //     Graph g;
-    //     g.add_edge("A", "B");
-    //     g.add_edge("B", "C");
-    //     g.add_edge("C", "D");
-    //     g.add_edge("D", "A");
-    //     REQUIRE(compare(g.get_cycles(), {{"A", "B", "C", "D"}}));
-    // }
+    SECTION ("one vertex (& self loop vertices)") {
+        Graph g;
+        g.add_node("A");
+        REQUIRE(compare(g.get_cycles(), {}));
+        g.add_edge("A", "A");
+        REQUIRE(compare(g.get_cycles(), {{"A"}}));
+        g.add_edge("B", "B");
+        REQUIRE(compare(g.get_cycles(), {{"B"}, {"A"}}));
+    }
+    SECTION ("linked list (&with a loop at the end)") {
+        Graph g;
+        g.add_edge("A", "B");
+        g.add_edge("B", "C");
+        g.add_edge("C", "D");
+        g.add_edge("D", "E");
+        REQUIRE(compare(g.get_cycles(), {}));
+        g.add_edge("E", "C");
+        REQUIRE(compare(g.get_cycles(), {{"C", "D", "E"}}));
+    }
+    SECTION ("circle") {
+        Graph g;
+        g.add_edge("A", "B");
+        g.add_edge("B", "C");
+        g.add_edge("C", "D");
+        g.add_edge("D", "A");
+        REQUIRE(compare(g.get_cycles(), {{"A", "B", "C", "D"}}));
+    }
     SECTION ("fully connected square") {
         Graph g;
         g.add_edge("0", "1"); g.add_edge("0", "2"); g.add_edge("0", "3");
@@ -407,8 +407,29 @@ TEST_CASE ("cycles") {
         g.add_edge("2", "0"); g.add_edge("2", "1"); g.add_edge("2", "3");
         g.add_edge("3", "0"); g.add_edge("3", "1"); g.add_edge("3", "2");
         auto result = g.get_cycles();
-        cout << "Result:" << endl;
-        print(result);
+        vector<vector<string>> req ={
+            {"0", "3", "2", "1"}, 
+            {"0", "3", "2"},
+            {"0", "3", "1", "2"},
+            {"0", "3", "1"}, 
+            {"0", "3"}, 
+            {"0", "2", "3", "1"}, 
+            {"0", "2", "3"}, 
+            {"0", "2", "1", "3"}, 
+            {"0", "2", "1"}, 
+            {"0", "2"}, 
+            {"0", "1", "3", "2"}, 
+            {"0", "1", "3"}, 
+            {"0", "1", "2", "3"}, 
+            {"0", "1", "2"}, 
+            {"0", "1"}, 
+            {"1", "3", "2"}, 
+            {"1", "3"}, 
+            {"1", "2", "3"}, 
+            {"1", "2"}, 
+            {"2", "3"}
+        };
+        REQUIRE(compare(result, req));
     }
     // SECTION ("A worst example for Tarjan's algorithm (from article)") {
     //     cout << "A worst example for Tarjan's algorithm" << endl;
