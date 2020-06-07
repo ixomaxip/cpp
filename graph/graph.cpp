@@ -37,8 +37,6 @@ protected:
     map<string, vector<string>> _adj;
 };
 
-
-
 vector<vector<string>> Graph::get_cycles() const {
     vector<vector<string>> cycles;
 
@@ -80,8 +78,6 @@ vector<vector<string>> Graph::get_cycles() const {
         cout << start << endl;
         scc.pop_back();
         blocked[start] = true;
-        // vector<string> stack;
-        // stack.push_back(start);
         vector<pair<string, vector<string>>> stack;
         stack.push_back(make_pair(start, g.get_neighbours(start)));
         vector<string> path;
@@ -91,7 +87,6 @@ vector<vector<string>> Graph::get_cycles() const {
             // string curr_node = stack.back();
             // auto list = g.get_neighbours(curr_node);
             auto [curr_node, list] = stack.back();
-            // stack.pop_back();
             if (!list.empty()) {
                 string next = list.back();
                 list.pop_back();
@@ -128,10 +123,8 @@ vector<vector<string>> Graph::get_cycles() const {
             }
         }
         g.remove_node(start);
-        // g.print();
 
         auto sub_g = g.subgraph(scc);
-        // sub_g.print();
         auto sub_sccs = sub_g.get_sccs();
         for (auto& c : sub_sccs) {
             sccs.push_back(c);
@@ -162,17 +155,12 @@ vector<vector<string>> Graph::get_sccs() {
 
     function<void(const string& node)> _sccs;
     _sccs = [&] (const string& node) -> void {
-        // cout << node << endl;
         idx[node] = low[node] = counter;
         counter++;
         stack.push_back(node);
         in_stack[node] = true;
 
         auto nbs = this->get_neighbours(node);
-        // for (auto& n : nbs) {
-        //     cout << " " << n;
-        // }
-        // cout <<endl;
         for (const auto& v : nbs) {
             if (idx[v] == -1) {
                _sccs(v);
