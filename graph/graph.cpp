@@ -82,9 +82,8 @@ vector<vector<string>> Graph::get_cycles() const {
         blocked[start] = true;
         // vector<string> stack;
         // stack.push_back(start);
-        vector<pair<string, vector<string>>&> stack;
-        auto start_nds = g.get_neighbours(start);
-        stack.push_back(make_pair(start, start_nds));
+        vector<pair<string, vector<string>>> stack;
+        stack.push_back(make_pair(start, g.get_neighbours(start)));
         vector<string> path;
         path.push_back(start);
 
@@ -96,7 +95,7 @@ vector<vector<string>> Graph::get_cycles() const {
             if (!list.empty()) {
                 string next = list.back();
                 list.pop_back();
-
+                stack.back() = make_pair(curr_node, list);
                 if (next == start) {
                     // yeah! i've got a cycle
                     cycles.push_back(path);
