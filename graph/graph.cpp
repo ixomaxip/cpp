@@ -301,70 +301,54 @@ void Graph::print() {
     }
 };
 
-TEST_CASE ("cycles") {
-    Graph one_vertex;
-    Graph linked_list;
-    Graph linked_list_with_loop;
-    Graph circle;
-    Graph g4;
-    Graph g5;
-    SECTION ("linked_list_with_loop") {
-        Graph g;
-        g.add_edge("A", "B");
-        g.add_edge("B", "C");
-        g.add_edge("C", "D");
-        g.add_edge("D", "E");
-        g.add_edge("E", "C");
-        // g.add_edge("A", "B");
-        vector<vector<string>> cs = g.get_cycles();
-        cout << cs.size() << endl;
-        
-        for (auto& c: cs) {
-            for (auto& v : c) {
-                cout << " " << v;
-            }
-            cout << endl;
+void print(const vector<vector<string>>& cs) {
+    cout << "[";
+    bool first = true;
+    for (const auto& c : cs) {
+        if (!first) {
+            cout << ", ";
         }
+        cout << "[";
+        first = true;
+        for (const auto& v : c) {
+            if (!first)
+                cout << ", ";
+            cout << v;
+            first = false;
+        }
+        cout << "]";
+        first = false;
 
     }
+    cout << "]" << endl;
 }
-TEST_CASE ("misc") {
 
-    Graph g;
-    g.add_edge("A", "D");
-    g.add_edge("B", "A"); g.add_edge("B", "C");
-    g.add_edge("C", "A"); g.add_edge("C", "D");
-    g.add_edge("D", "A"); g.add_edge("D", "B");
-    g.add_edge("E", "E");
+bool compare(vector<vector<string>> v1, vector<vector<string>> v2, bool do_sort = false) {
+    if (v1.size() != v2.size()) {
+        return false;
+    }
+    if (do_sort) {
+        sort(v1.begin(), v1.end());
+        sort(v2.begin(), v2.end());
+        for (auto& v : v1) {
+            sort(v.begin(), v.end());
+        }
+        for (auto& v : v2) {
+            sort(v.begin(), v.end());
+        }
+    }
+    for (size_t i = 0; i < v1.size(); i++) {
+        if (v1[i].size() != v2[i].size()) {
+            return false;
+        }
+        for (size_t j = 0; i < v1.size(); i++) {
+            if (v1[i][j] != v2[i][j]) {
+                return false;
+            }
+        }
+    }
 
-    // g.print();
-    cout << endl;
-
-    SECTION ("subgraph"){
-        // cout << "Subgraph" << endl;
-        Graph sg = g.subgraph({"B", "D", "A"});
-        // sg.print();
-        // cout << endl;
-    }
-    SECTION ("remove node"){
-        // cout << "Remove" << endl;
-        g.remove_node("A");
-        // g.print();
-        // cout << endl;
-    }
-    SECTION ("strongly connected components"){
-        vector<vector<string>> cs = g.get_sccs();
-        // int cnt = 0;
-        // for (auto& c : cs) {
-        //     cout << cnt++ << ":";
-        //     for (auto& v : c) {
-        //         cout << " " << v;
-        //     }
-        //     cout << endl;
-        // }
-        vector<vector<string>> req = {{"C", "B", "D", "A"}, {"E"}};
-        REQUIRE (g.get_sccs() == req);
-    }
+    return true;
 }
 TEST_CASE ("Shortest path") {
     vector<string> req;
@@ -427,10 +411,53 @@ TEST_CASE ("Shortest path") {
         req = {"A", "D", "E"};
         REQUIRE(g.get_path("A", "E") == req);
     };
-
-
 };
+TEST_CASE ("misc") {
 
+    Graph g;
+    g.add_edge("A", "D");
+    g.add_edge("B", "A"); g.add_edge("B", "C");
+    g.add_edge("C", "A"); g.add_edge("C", "D");
+    g.add_edge("D", "A"); g.add_edge("D", "B");
+    g.add_edge("E", "E");
+
+    // g.print();
+    // cout << endl;
+
+    SECTION ("subgraph"){
+        // cout << "Subgraph" << endl;
+        // Graph sg = g.subgraph({"B", "D", "A"});
+        // sg.print();
+        // cout << endl;
+    }
+    SECTION ("remove node"){
+        // cout << "Remove" << endl;
+        // g.remove_node("A");
+        // g.print();
+        // cout << endl;
+    }
+    SECTION ("strongly connected components"){
+        vector<vector<string>> cs = g.get_sccs();
+        vector<vector<string>> req = {{"C", "B", "D", "A"}, {"E"}};
+        REQUIRE (g.get_sccs() == req);
+
+        Graph g4;
+        g4.add_edge("0","1");g4.add_edge("0","3");
+        g4.add_edge("1","2");g4.add_edge("1","4"); 
+        g4.add_edge("2","0");g4.add_edge("2","6"); 
+        g4.add_edge("3","2"); 
+        g4.add_edge("4","5");g4.add_edge("4","6"); 
+        g4.add_edge("5","6");g4.add_edge("5","7");g4.add_edge("5","8");g4.add_edge("5","9"); 
+        g4.add_edge("6","4"); 
+        g4.add_edge("7","9"); 
+        g4.add_edge("8","9"); 
+        g4.add_edge("9","8");
+        g4.add_node("10");
+        auto result = g4.get_sccs();
+        print(result);
+        REQUIRE(compare(result, {{"8", "9"}, {"7"}, {"5", "4", "6"}, {"3", "2", "1"}, {"10"}}));
+    }
+}
 // int main() {
 
 //     Graph g;
