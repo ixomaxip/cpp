@@ -15,6 +15,8 @@ using namespace std;
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
 
+void print(const vector<vector<string>>& cs);
+
 class Graph {
 public:
     void add_node(const string& node_name);
@@ -41,7 +43,7 @@ vector<vector<string>> Graph::get_cycles() const {
     vector<vector<string>> cycles;
 
     auto _unblock = []
-    (const string curr_node, map<string, bool>& blocked, map<string, set<string>>& B) -> void {
+    (const string curr_node, map<string, bool>& blocked, map<string, vector<string>>& B) -> void {
         vector<string> stack;
         stack.push_back(curr_node);
         while (!stack.empty()) {
@@ -66,7 +68,7 @@ vector<vector<string>> Graph::get_cycles() const {
 
         map<string, bool> blocked; // blocked from search
         map<string, bool> closed; // already in a cycle
-        map<string, set<string>> B;  // graph without elementary cycles
+        map<string, vector<string>> B;  // graph without elementary cycles
         // defaults
         for (const auto& u : scc) {
             blocked[u] = false;
@@ -75,20 +77,26 @@ vector<vector<string>> Graph::get_cycles() const {
         }
         // getting start vertex
         string start = scc.back();
+        cout << start << endl;
         scc.pop_back();
         blocked[start] = true;
-        vector<string> stack;
-        stack.push_back(start);
+        // vector<string> stack;
+        // stack.push_back(start);
+        vector<pair<string, vector<string>>&> stack;
+        auto start_nds = g.get_neighbours(start);
+        stack.push_back(make_pair(start, start_nds));
         vector<string> path;
         path.push_back(start);
 
-        while (!stack.empty()) {            
-            string curr_node = stack.back();
-            stack.pop_back();
-            auto list = g.get_neighbours(curr_node);
+        while (!stack.empty()) {
+            // string curr_node = stack.back();
+            // auto list = g.get_neighbours(curr_node);
+            auto [curr_node, list] = stack.back();
+            // stack.pop_back();
             if (!list.empty()) {
                 string next = list.back();
                 list.pop_back();
+
                 if (next == start) {
                     // yeah! i've got a cycle
                     cycles.push_back(path);
@@ -98,7 +106,7 @@ vector<vector<string>> Graph::get_cycles() const {
                 } else if (!blocked[next]) {
                     // first visit
                     path.push_back(next);
-                    stack.push_back(next);
+                    stack.push_back(make_pair(next, g.get_neighbours(next)));
                     closed[next] = false;
                     blocked[next] = true;
                     continue;
@@ -111,19 +119,26 @@ vector<vector<string>> Graph::get_cycles() const {
                 } else {
                     auto curr_neibs = g.get_neighbours(curr_node);
                     for (const auto& n : curr_neibs) {
-                        if (B[n].find(curr_node) == B[n].end()) {
-                            B[n].insert(curr_node);
+                        if (find(B[n].begin(), B[n].end(), curr_node) == B[n].end()) {
+                            B[n].push_back(curr_node);
                         }
                     }
                 }
+                stack.pop_back();
+                path.pop_back();
             }
         }
         g.remove_node(start);
+        // g.print();
+
         auto sub_g = g.subgraph(scc);
+        // sub_g.print();
         auto sub_sccs = sub_g.get_sccs();
         for (auto& c : sub_sccs) {
             sccs.push_back(c);
         }
+        // ::print(sccs);
+
     }
     return cycles;
 }
