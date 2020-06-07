@@ -298,13 +298,26 @@ vector<string> Graph::get_path(const string& from, const string& to ) {
 }
 
 void Graph::print() {
+    cout << "[";
+    bool first = true;
     for (const auto& [u, list] : this->_adj) {
-        if (list.empty())
-            cout << u << endl;
-        for (const auto& v : list) {
-            cout << u << " -> " << v << endl;
+        if (!first) {
+            cout << ", ";
         }
+        cout << u << ": [";
+        first = true;
+        // if (list.empty())
+            // cout << u << ": [";
+        for (const auto& v : list) {
+            if (!first)
+                cout << ", ";
+            cout << v;
+            first = false;
+        }
+        cout << "]";
+        first = false;
     }
+    cout << "]" << endl;
 };
 
 void print(const vector<vector<string>>& cs) {
