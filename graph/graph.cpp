@@ -206,11 +206,14 @@ vector<string> Graph::get_nodes() {
 }
 
 vector<string> Graph::get_neighbours(const string& u) {
-    if (this->_adj.find(u) == this->_adj.end()) {
-        return vector<string>();
-    } else {
-        return this->_adj[u];
+    vector<string> nbs = {};
+    if (this->_adj.find(u) != this->_adj.end()) {
+        for (auto& v : this->_adj[u])
+        nbs.push_back(v);
+        // sort(nbs.begin(), nbs.end());
+        // reverse(nbs.begin(), nbs.end());
     }
+    return nbs;
 }
 
 void Graph::remove_node(const string& node) {
