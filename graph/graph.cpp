@@ -336,19 +336,9 @@ void print(const vector<vector<string>>& cs) {
     cout << "]" << endl;
 }
 
-bool compare(vector<vector<string>> v1, vector<vector<string>> v2, bool do_sort = false) {
+bool compare(vector<vector<string>> v1, vector<vector<string>> v2) {
     if (v1.size() != v2.size()) {
         return false;
-    }
-    if (do_sort) {
-        sort(v1.begin(), v1.end());
-        sort(v2.begin(), v2.end());
-        for (auto& v : v1) {
-            sort(v.begin(), v.end());
-        }
-        for (auto& v : v2) {
-            sort(v.begin(), v.end());
-        }
     }
     for (size_t i = 0; i < v1.size(); i++) {
         if (v1[i].size() != v2[i].size()) {
@@ -525,9 +515,6 @@ TEST_CASE ("misc") {
     g.add_edge("D", "A"); g.add_edge("D", "B");
     g.add_edge("E", "E");
 
-    // g.print();
-    // cout << endl;
-
     SECTION ("subgraph"){
         // cout << "Subgraph" << endl;
         // Graph sg = g.subgraph({"B", "D", "A"});
@@ -558,22 +545,6 @@ TEST_CASE ("misc") {
         g4.add_edge("9","8");
         g4.add_node("10");
         auto result = g4.get_sccs();
-        // print(result);
         REQUIRE(compare(result, {{"8", "9"}, {"7"}, {"5", "4", "6"}, {"3", "2", "1"}, {"10"}}));
     }
 }
-// int main() {
-
-//     Graph g;
-//     g.add_edge("A", "B");
-//     g.add_edge("A", "C");
-//     g.add_edge("D", "A");
-//     g.add_edge("E", "F");
-
-
-//     g.print();
-
-//     return 0;
-// }
-
-
