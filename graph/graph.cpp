@@ -358,33 +358,76 @@ bool compare(vector<vector<string>> v1, vector<vector<string>> v2, bool do_sort 
 }
 
 TEST_CASE ("cycles") {
-    SECTION ("one vertex (& self loop vertices)") {
+    // SECTION ("one vertex (& self loop vertices)") {
+    //     Graph g;
+    //     g.add_node("A");
+    //     REQUIRE(compare(g.get_cycles(), {}));
+    //     g.add_edge("A", "A");
+    //     REQUIRE(compare(g.get_cycles(), {{"A"}}));
+    //     g.add_edge("B", "B");
+    //     REQUIRE(compare(g.get_cycles(), {{"B"}, {"A"}}));
+    // }
+    // SECTION ("linked list (&with a loop at the end)") {
+    //     Graph g;
+    //     g.add_edge("A", "B");
+    //     g.add_edge("B", "C");
+    //     g.add_edge("C", "D");
+    //     g.add_edge("D", "E");
+    //     REQUIRE(compare(g.get_cycles(), {}));
+    //     g.add_edge("E", "C");
+    //     REQUIRE(compare(g.get_cycles(), {{"C", "D", "E"}}));
+    // }
+    // SECTION ("circle") {
+    //     Graph g;
+    //     g.add_edge("A", "B");
+    //     g.add_edge("B", "C");
+    //     g.add_edge("C", "D");
+    //     g.add_edge("D", "A");
+    //     REQUIRE(compare(g.get_cycles(), {{"A", "B", "C", "D"}}));
+    // }
+    SECTION ("fully connected square") {
         Graph g;
-        g.add_node("A");
-        REQUIRE(compare(g.get_cycles(), {}));
-        g.add_edge("A", "A");
-        REQUIRE(compare(g.get_cycles(), {{"A"}}));
-        g.add_edge("B", "B");
-        REQUIRE(compare(g.get_cycles(), {{"B"}, {"A"}}));
+        g.add_edge("0", "1"); g.add_edge("0", "2"); g.add_edge("0", "3");
+        g.add_edge("1", "0"); g.add_edge("1", "2"); g.add_edge("1", "3");
+        g.add_edge("2", "0"); g.add_edge("2", "1"); g.add_edge("2", "3");
+        g.add_edge("3", "0"); g.add_edge("3", "1"); g.add_edge("3", "2");
+        auto result = g.get_cycles();
+        cout << "Result:" << endl;
+        print(result);
     }
-    SECTION ("linked list (&with a loop at the end)") {
-        Graph g;
-        g.add_edge("A", "B");
-        g.add_edge("B", "C");
-        g.add_edge("C", "D");
-        g.add_edge("D", "E");
-        REQUIRE(compare(g.get_cycles(), {}));
-        g.add_edge("E", "C");
-        REQUIRE(compare(g.get_cycles(), {{"C", "D", "E"}}));
-    }
-    SECTION ("circle") {
-        Graph g;
-        g.add_edge("A", "B");
-        g.add_edge("B", "C");
-        g.add_edge("C", "D");
-        g.add_edge("D", "A");
-        REQUIRE(compare(g.get_cycles(), {{"A", "B", "C", "D"}}));
-    }
+    // SECTION ("A worst example for Tarjan's algorithm (from article)") {
+    //     cout << "A worst example for Tarjan's algorithm" << endl;
+    //     Graph g;
+    //     g.add_edge("1", "2"); g.add_edge("1", "3"); g.add_edge("1", "4");
+    //     g.add_edge("2", "5");
+    //     g.add_edge("3", "5");
+    //     g.add_edge("4", "5");
+    //     g.add_edge("5", "6"); g.add_edge("5", "8");
+    //     g.add_edge("6", "7"); g.add_edge("6", "8");
+    //     g.add_edge("7", "1"); g.add_edge("7", "8");
+    //     g.add_edge("8", "9"); g.add_edge("8", "10"); g.add_edge("8", "11");
+    //     g.add_edge("9", "5"); g.add_edge("9", "12");
+    //     g.add_edge("10", "12");
+    //     g.add_edge("11", "12");
+    //     g.add_edge("12", "8");
+
+    //     Graph g4;
+    //     g4.add_edge("0","1");g4.add_edge("0","3");
+    //     g4.add_edge("1","2");g4.add_edge("1","4"); 
+    //     g4.add_edge("2","0");g4.add_edge("2","6"); 
+    //     g4.add_edge("3","2"); 
+    //     g4.add_edge("4","5");g4.add_edge("4","6"); 
+    //     g4.add_edge("5","6");g4.add_edge("5","7");g4.add_edge("5","8");g4.add_edge("5","9"); 
+    //     g4.add_edge("6","4"); 
+    //     g4.add_edge("7","9"); 
+    //     g4.add_edge("8","9"); 
+    //     g4.add_edge("9","8");
+    //     g4.add_node("10");
+    //     auto result = g4.get_sccs();
+    //     print(result);
+    //     REQUIRE(compare(result, {{"8", "9"}, {"7"}, {"5", "4", "6"}, {"3", "2", "1"}, {"10"}}));
+    //     // [[1, 4, 5, 6, 7], [1, 3, 5, 6, 7], [1, 2, 5, 6, 7], [5, 6, 7, 8, 9], [5, 6, 8, 9], [8, 11, 12], [8, 10, 12], [8, 9, 12]]
+    // }
 }
 
 TEST_CASE ("Shortest path") {
@@ -491,7 +534,7 @@ TEST_CASE ("misc") {
         g4.add_edge("9","8");
         g4.add_node("10");
         auto result = g4.get_sccs();
-        print(result);
+        // print(result);
         REQUIRE(compare(result, {{"8", "9"}, {"7"}, {"5", "4", "6"}, {"3", "2", "1"}, {"10"}}));
     }
 }
