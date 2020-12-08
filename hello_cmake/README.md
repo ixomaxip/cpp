@@ -1,2 +1,2 @@
-- example 1 - The simplest app
-- example 2 - Static library
+- ex1 - The simplest app
+- ex2 - Static library
