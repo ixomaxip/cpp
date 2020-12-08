@@ -1,0 +1,2 @@
+- example 1 - The simplest app
+- example 2 - Static library
